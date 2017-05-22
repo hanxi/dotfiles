@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_1='/home/huangliangming/.vim/bundle/vim-colors-solarized'
+let g:netrw_dirhist_2='/home/huangliangming/.vim/bundle/vim-colors-solarized/colors'
+let g:netrw_dirhist_3='/home/huangliangming'
+let g:netrw_dirhist_4='/home/huangliangming/swords/trunk/server'
+let g:netrw_dirhist_5='/home/huangliangming/tmp'
