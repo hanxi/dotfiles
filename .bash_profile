@@ -33,7 +33,7 @@ alias tmux="$HOME/.tmux/sessions.sh"
 #if command -v tmux>/dev/null; then
 #    [[ $- != *i* ]] && return
 #    if [ -z $TMUX ]; then
-#        exec tmux
+#        exec "$HOME/.tmux/sessions.sh"
 #    fi
 #fi
 
