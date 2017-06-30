@@ -29,11 +29,13 @@ export PATH
 export TERM=xterm-256color
 
 # tmux
-alias tmux="$HOME/.tmux/sessions.sh"
-#if command -v tmux>/dev/null; then
-#    [[ $- != *i* ]] && return
-#    if [ -z $TMUX ]; then
-#        exec "$HOME/.tmux/sessions.sh"
-#    fi
-#fi
+S_FILE="$HOME/.tmux/sessions.sh"
+if command -v tmux>/dev/null; then
+    [[ $- != *i* ]] && return
+    if [[ -z $TMUX && `du $S_FILE | cut -b 1` != '0' ]]; then
+        alias tmux=$S_FILE
+        exec "$S_FILE"
+    fi
+fi
+
 
