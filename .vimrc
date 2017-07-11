@@ -12,7 +12,8 @@ Plugin 'Align'
 "Plugin 'dantezhu/authorinfo'
 Plugin 'Shougo/neocomplcache.vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'mileszs/ack.vim'
+Plugin 'mhinz/vim-grepper'
+Plugin 'yssl/QFEnter'
 Plugin 'majutsushi/tagbar'
 Plugin 'mru.vim'
 Plugin 'lifepillar/vim-solarized8'
@@ -112,7 +113,7 @@ let g:vimrc_email='hanxi.com@gmail.com'
 let g:vimrc_homepage='http://hanxi.info'
 "}
 
-"ack{
+"grepper{
 function! FindProjectRoot(lookFor)
     let pathMaker='%:p'
     while(len(expand(pathMaker))>len(expand(pathMaker.':h')))
@@ -124,14 +125,19 @@ function! FindProjectRoot(lookFor)
     endwhile
     return expand('%:p:h')
 endfunction
-if executable('ag')
-  let g:ackprg = 'cd '.FindProjectRoot('.git').';ag --vimgrep'
-endif
-cnoreabbrev Ack Ack!
-nnoremap <Leader>a :Ack!<Space>
-" 设置快捷键搜索选中字符串
-xmap gs y:Ack <C-R>"
-nmap gs y:Ack <C-R>"
+nmap gs  <plug>(GrepperOperator)
+xmap gs  <plug>(GrepperOperator)
+let g:grepper = {}
+let g:grepper.ag = {}
+let g:grepper.ag.grepprg = 'ag --vimgrep $* '.FindProjectRoot('.project')
+"}
+
+"QFEnter{
+let g:qfenter_keymap = {}
+let g:qfenter_keymap.open = ['<CR>', '<2-LeftMouse>']
+let g:qfenter_keymap.vopen = ['<Leader><CR>']
+let g:qfenter_keymap.hopen = ['<Leader><Space>']
+let g:qfenter_keymap.topen = ['<Leader><Tab>']
 "}
 
 "promptline{
