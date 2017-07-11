@@ -62,6 +62,7 @@ set helplang=cn             "帮助系统设置为中文
 set nofoldenable            "关闭代码折叠
 "set term=screen
 set clipboard=unnamed       " use the system clipboard
+set nois                    " 设置搜索不自动跳转
 "}} 通用配置结束
 
 "{{ 快捷键配置
