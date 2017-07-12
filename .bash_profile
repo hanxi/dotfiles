@@ -26,16 +26,15 @@ export PATH
 # promptline
 . $HOME/.shell_prompt.sh
 
-export TERM=xterm-256color
+export TERM=screen-256color
 
 # tmux
 S_FILE="$HOME/.tmux/sessions.sh"
 if command -v tmux>/dev/null; then
     [[ $- != *i* ]] && return
-    if [[ -z $TMUX && `du $S_FILE | cut -b 1` != '0' ]]; then
+    if [[ -z $TMUX && `wc $S_FILE | cut -b 1` != '0' ]]; then
         alias tmux=$S_FILE
         exec "$S_FILE"
     fi
 fi
-
 

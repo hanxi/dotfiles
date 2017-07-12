@@ -7,23 +7,23 @@ filetype off
 "set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
-Plugin 'Align'
-"Plugin 'dantezhu/authorinfo'
-Plugin 'Shougo/neocomplcache.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'mhinz/vim-grepper'
-Plugin 'yssl/QFEnter'
-Plugin 'majutsushi/tagbar'
-Plugin 'mru.vim'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'lifepillar/vim-solarized8'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'edkolev/tmuxline.vim'                " generate tmuxline color
-Plugin 'edkolev/promptline.vim'              " generate bash path color
-"Plugin 'posva/vim-vue'                       " syntax color
-"Plugin 'mustache/vim-mustache-handlebars'    " syntax color
+Plugin 'gmarik/Vundle.vim'                  " 插件管理工具
+Plugin 'Align'                              " 对其等号
+Plugin 'Shougo/neocomplcache.vim'           " 自动补全
+Plugin 'scrooloose/nerdtree'                " 目录树
+Plugin 'mhinz/vim-grepper'                  " 文件内容搜索
+Plugin 'yssl/QFEnter'                       " quick-fix 窗口快捷键
+Plugin 'majutsushi/tagbar'                  " 函数列表
+Plugin 'mru.vim'                            " 最近打开的文件
+Plugin 'ctrlpvim/ctrlp.vim'                 " 文件名搜索
+Plugin 'lifepillar/vim-solarized8'          " solarized 主题
+Plugin 'vim-airline/vim-airline'            " 状态栏
+Plugin 'vim-airline/vim-airline-themes'     " 状态栏主题
+Plugin 'edkolev/tmuxline.vim'               " 生成 tmuxline color
+Plugin 'edkolev/promptline.vim'             " 生成 bash path color
+"Plugin 'dantezhu/authorinfo'                " 插入作者信息
+"Plugin 'posva/vim-vue'                      " vue syntax color
+"Plugin 'mustache/vim-mustache-handlebars'   " vue 模板 syntax color
 call vundle#end()
 filetype plugin indent on
 "}} 插件安装结束
