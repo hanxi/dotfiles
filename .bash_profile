@@ -25,6 +25,7 @@ export PATH
 
 # promptline
 . $HOME/.shell_prompt.sh
+. $HOME/.git-completion.bash
 
 export TERM=screen-256color
 
