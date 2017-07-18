@@ -31,6 +31,7 @@ LoginShell\1\
 StampUtmp\1\
 BugChanReq\0\
 BugWinadj\0\
+BugOldGex2\0\
 BugMaxPkt2\0\
 BugRekey2\0\
 BugPKSessID2\0\
@@ -47,13 +48,13 @@ LocalPortAcceptAll\0\
 X11AuthFile\\
 X11AuthType\1\
 X11Display\\
-X11Forward\0\
+X11Forward\1\
 BlinkText\0\
 BCE\1\
 LockSize\0\
 EraseToScrollback\1\
-ScrollOnDisp\1\
-ScrollOnKey\0\
+ScrollOnDisp\0\
+ScrollOnKey\1\
 ScrollBarFullScreen\0\
 ScrollBar\0\
 CapsLockCyr\0\
@@ -127,7 +128,7 @@ BellOverloadN\5\
 BellOverload\1\
 BellWaveFile\\
 BeepInd\0\
-Beep\1\
+Beep\0\
 BlinkCur\1\
 CurType\0\
 WindowBorder\1\
@@ -156,7 +157,7 @@ HyperlinkUnderline\1\
 WindowIcon\\
 TrayRestore\0\
 StartTray\0\
-Tray\0\
+Tray\3\
 FailureReconnect\0\
 WakeupReconnect\0\
 Transparency\255\
@@ -178,7 +179,7 @@ BackspaceIsDelete\1\
 PassiveTelnet\0\
 RFCEnviron\0\
 RemoteCommand\\
-PublicKeyFile\C:%5CUsers%5Chlm%5CDocuments%5Cputty%5Chlm%5Chlm.ppk\
+PublicKeyFile\D:%5Cputty%5Cid_rsa.ppk\
 SSH2DES\0\
 LogHost\\
 SshProt\3\
@@ -192,7 +193,7 @@ SshBanner\1\
 SshNoAuth\0\
 RekeyBytes\1G\
 RekeyTime\60\
-KEX\ecdh,dh-gex-sha1,dh-group14-sha1,dh-group1-sha1,rsa,WARN\
+KEX\dh-gex-sha1,dh-group14-sha1,dh-group1-sha1,rsa,WARN\
 Cipher\aes,blowfish,3des,WARN,arcfour,des\
 ChangeUsername\0\
 GssapiFwd\0\
@@ -202,7 +203,7 @@ Compression\1\
 NoPTY\0\
 LocalUserName\\
 UserNameFromEnvironment\0\
-UserName\huangliangming\
+UserName\hlm\
 Environment\\
 ProxyTelnetCommand\connect%20%25host%20%25port%5Cn\
 ProxyPassword\\
@@ -223,7 +224,7 @@ PingIntervalSecs\10\
 PingInterval\0\
 WarnOnClose\0\
 CloseOnExit\1\
-PortNumber\22\
+PortNumber\2223\
 Protocol\ssh\
 SSHLogOmitData\0\
 SSHLogOmitPasswords\1\
@@ -231,5 +232,5 @@ LogFlush\1\
 LogFileClash\-1\
 LogType\0\
 LogFileName\putty.log\
-HostName\10.12.1.224\
+HostName\127.0.0.1\
 Present\1\
