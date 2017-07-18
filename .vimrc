@@ -64,6 +64,7 @@ set nofoldenable            "关闭代码折叠
 "set term=screen
 set clipboard=unnamed       " use the system clipboard
 set nois                    " 设置搜索不自动跳转
+set mouse=a                 " 支持鼠标滚动
 "}} 通用配置结束
 
 "{{ 快捷键配置
@@ -131,7 +132,7 @@ nmap gs  <plug>(GrepperOperator)
 xmap gs  <plug>(GrepperOperator)
 let g:grepper = {}
 let g:grepper.ag = {}
-let g:grepper.ag.grepprg = 'ag --vimgrep $* '.FindProjectRoot('.project')
+let g:grepper.ag.grepprg = 'ag --vimgrep $* '.FindProjectRoot('.git')
 "}
 
 "QFEnter{
@@ -173,6 +174,18 @@ let g:tmuxline_preset = {
 "tagbar{
 map tb :TagbarToggle<cr>
 xmap tb :TagbarToggle<cr>
+"}
+
+"ctrlp{
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+"set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+            \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+            \ 'file': '\v\.(exe|so|dll)$',
+            \ 'link': 'some_bad_symbolic_links',
+            \ }
 "}
 
 "}} 插件配置结束
