@@ -138,10 +138,9 @@ let g:grepper.ag.grepprg = 'ag --vimgrep $* '.g:root_dir
 
 "QFEnter{
 let g:qfenter_keymap = {}
-let g:qfenter_keymap.open = ['<CR>', '<2-LeftMouse>']
-let g:qfenter_keymap.vopen = ['<Leader><CR>']
-let g:qfenter_keymap.hopen = ['<Leader><Space>']
-let g:qfenter_keymap.topen = ['<Leader><Tab>']
+let g:qfenter_keymap.vopen = ['<C-v>']
+let g:qfenter_keymap.hopen = ['<C-CR>', '<C-s>', '<C-x>']
+let g:qfenter_keymap.topen = ['<C-t>']
 "}
 
 "promptline{
