@@ -16,6 +16,7 @@ Plugin 'yssl/QFEnter'                       " quick-fix 窗口快捷键
 Plugin 'majutsushi/tagbar'                  " 函数列表
 Plugin 'mru.vim'                            " 最近打开的文件
 Plugin 'ctrlpvim/ctrlp.vim'                 " 文件名搜索
+Plugin 'ronakg/quickr-cscope.vim'           " cscope 跳转
 Plugin 'lifepillar/vim-solarized8'          " solarized 主题
 Plugin 'vim-airline/vim-airline'            " 状态栏
 Plugin 'vim-airline/vim-airline-themes'     " 状态栏主题
@@ -72,7 +73,6 @@ set mouse=a                 " 支持鼠标滚动
 let mapleader = ','
 nnoremap <C-l> gt
 nnoremap <C-h> gT
-nnoremap <leader>t : tabe<CR>
 
 "大写字母
 inoremap <c-u> <esc>gUiwea
@@ -128,11 +128,12 @@ function! FindProjectRoot(lookFor)
     endwhile
     return expand('%:p:h')
 endfunction
+let g:root_dir = FindProjectRoot('.git')
 nmap gs  <plug>(GrepperOperator)
 xmap gs  <plug>(GrepperOperator)
 let g:grepper = {}
 let g:grepper.ag = {}
-let g:grepper.ag.grepprg = 'ag --vimgrep $* '.FindProjectRoot('.git')
+let g:grepper.ag.grepprg = 'ag --vimgrep $* '.g:root_dir
 "}
 
 "QFEnter{
@@ -188,18 +189,17 @@ let g:ctrlp_custom_ignore = {
             \ }
 "}
 
-"}} 插件配置结束
+"cscope{
+let g:quickr_cscope_use_qf_g = 1
+let g:quickr_cscope_autoload_db = 0
+if has("cscope")
+    exe 'cs add '.g:root_dir.'/cscope.out '.g:root_dir
+    set csto=1
+    set cst
+endif
+"}
 
-" 保存执行ctags
-function! UPDATE_TAGS()
-    let _f_ = expand("%:p")
-    let _cmd_ = '"ctags -R"'
-    let _resp = system(_cmd_)
-    unlet _cmd_
-    unlet _f_
-    unlet _resp
-endfunction
-"autocmd BufWrite *.cpp,*.h,*.c,*.lua call UPDATE_TAGS()
+"}} 插件配置结束
 
 " 保存时自动删除行尾空格
 func! DeleteTrailingWS()
@@ -214,4 +214,14 @@ command W call DeleteTrailingWS()
 
 " 记住上次编辑的位置
 au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
+
+" 保存执行ctags
+func! UPDATE_TAGS()
+    exe "!cd ".g:root_dir
+    exe "!ctags -R"
+    exe "!cscope -Rbqk"
+    :cs reset <CR><CR>
+endfunc
+"autocmd BufWrite *.cpp,*.h,*.c,*.lua call UPDATE_TAGS()
+command Ctags call UPDATE_TAGS()
 
