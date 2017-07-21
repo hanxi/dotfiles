@@ -180,7 +180,6 @@ xmap tb :TagbarToggle<cr>
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 "set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_custom_ignore = {
             \ 'dir':  '\v[\/]\.(git|hg|svn)$',
             \ 'file': '\v\.(exe|so|dll)$',
@@ -192,7 +191,10 @@ let g:ctrlp_custom_ignore = {
 let g:quickr_cscope_use_qf_g = 1
 let g:quickr_cscope_autoload_db = 0
 if has("cscope")
-    exe 'cs add '.g:root_dir.'/cscope.out '.g:root_dir
+    let g:cscope_out = g:root_dir.'/cscope.out'
+    if filereadable(g:cscope_out)
+        exe 'cs add '.g:cscope_out.' '.g:root_dir
+    endif
     set csto=1
     set cst
 endif
