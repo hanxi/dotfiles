@@ -165,7 +165,7 @@ let g:tmuxline_preset = {
             \'cwin' : '#I #W #F',
             \'x'    : '%Y-%m-%d',
             \'y'    : '%H:%M:%S',
-            \'z'    : "#(ifconfig | grep 'inet addr'| awk -F'[:\t ]+' '{print $4}' | grep -v '127.0.0.1' | grep -v '^10.0')",
+            \'z'    : "#(ifconfig | grep inet[^6] | awk -F'[:\t ]+' '{print $3,$4}' | sed 's/netmask//; s/addr//; s/ //' | grep -v '127.0.0.1' | grep -v '^10.0')",
             \'options': {
             \'status-justify':'left'}
             \}
