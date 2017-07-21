@@ -203,13 +203,13 @@ endif
 "}} 插件配置结束
 
 " 保存时自动删除行尾空格
-func! DeleteTrailingWS()
+function! DeleteTrailingWS()
     %ret! 4
     exe "normal mz"
     %s/\s\+$//ge
     exe "normal `z"
     :w
-endfunc
+endfunction
 "autocmd BufWrite * :call DeleteTrailingWS()
 command W call DeleteTrailingWS()
 
@@ -217,11 +217,11 @@ command W call DeleteTrailingWS()
 au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
 
 " 保存执行ctags
-func! UPDATE_TAGS()
+function! UpdateTags()
     exe "!cd ".g:root_dir." && ctags -R"
     exe "!cd ".g:root_dir." && cscope -Rbqk"
     :cs reset <CR><CR>
-endfunc
+endfunction
 "autocmd BufWrite *.cpp,*.h,*.c,*.lua call UPDATE_TAGS()
-command Ctags call UPDATE_TAGS()
+command Ctags call UpdateTags()
 
