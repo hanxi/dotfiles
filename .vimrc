@@ -218,9 +218,8 @@ au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|
 
 " 保存执行ctags
 func! UPDATE_TAGS()
-    exe "!cd ".g:root_dir
-    exe "!ctags -R"
-    exe "!cscope -Rbqk"
+    exe "!cd ".g:root_dir." && ctags -R"
+    exe "!cd ".g:root_dir." && cscope -Rbqk"
     :cs reset <CR><CR>
 endfunc
 "autocmd BufWrite *.cpp,*.h,*.c,*.lua call UPDATE_TAGS()
