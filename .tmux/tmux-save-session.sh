@@ -82,7 +82,7 @@ setup() {
   #echo $sessions
   touch $filename
   echo '#!/bin/bash' >> $filename
-  echo 'export TERM=xterm-256color' >> $filename
+  echo 'export TERM=screen-256color' >> $filename
   echo 'if $(tmux has-session 2>/dev/null); then tmux att; exit; fi' >> $filename
 }
 
