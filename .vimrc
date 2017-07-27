@@ -193,7 +193,7 @@ let g:quickr_cscope_autoload_db = 0
 if has("cscope")
     let g:cscope_out = g:root_dir.'/cscope.out'
     if filereadable(g:cscope_out)
-        exe 'cs add '.g:cscope_out.' '.g:root_dir
+        silent exe 'cs add '.g:cscope_out.' '.g:root_dir
     endif
     set csto=1
     set cst
@@ -224,4 +224,3 @@ function! UpdateTags()
 endfunction
 "autocmd BufWrite *.cpp,*.h,*.c,*.lua call UPDATE_TAGS()
 command Ctags call UpdateTags()
-
