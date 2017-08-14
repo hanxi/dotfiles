@@ -39,10 +39,10 @@ construct_panes() {
     [ "$window_index" = "$last_window" ] && initial_pane=false
 
     if [ "$initial_window" == "true" ] && [ "$initial_pane" = "true" ]; then
-      echo "tmux new-session -d -n $window_name -s $session -c "$2""
+      echo "tmux new-session -d -s $session -c "$2""
       initial_session=false
     elif [ "$initial_window" == "true" ] || [ "$initial_pane" = "true" ]; then
-      echo "tmux new-window -d -n $window_name -t $session:$window_index -c "$2""
+      echo "tmux new-window -d -t $session:$window_index -c "$2""
     else
       echo "tmux split-window -d -t $session:$window_index -c "$2""
     fi
