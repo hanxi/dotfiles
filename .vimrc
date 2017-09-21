@@ -17,6 +17,7 @@ Plugin 'majutsushi/tagbar'                  " 函数列表
 Plugin 'mru.vim'                            " 最近打开的文件
 Plugin 'ctrlpvim/ctrlp.vim'                 " 文件名搜索
 Plugin 'ronakg/quickr-cscope.vim'           " cscope 跳转
+Plugin 'tpope/vim-fugitive'                 " git 操作
 Plugin 'lifepillar/vim-solarized8'          " solarized 主题
 Plugin 'vim-airline/vim-airline'            " 状态栏
 Plugin 'vim-airline/vim-airline-themes'     " 状态栏主题
@@ -95,7 +96,7 @@ let g:airline_symbols.maxlinenr = ''
 "}
 
 "nerdtree{ 目录树配置
-map <C-T> :NERDTree<CR>
+map <C-t> :NERDTree<CR>
 "}
 "
 
@@ -179,12 +180,14 @@ xmap tb :TagbarToggle<cr>
 "ctrlp{
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 "set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
-
+let g:ctrlp_types = ['fil', 'mru']
 let g:ctrlp_custom_ignore = {
             \ 'dir':  '\v[\/]\.(git|hg|svn)$',
             \ 'file': '\v\.(exe|so|dll)$',
             \ 'link': 'some_bad_symbolic_links',
             \ }
+let g:NERDTreeChDirMode       = 2
+let g:ctrlp_working_path_mode = 'rw'
 "}
 
 "cscope{
