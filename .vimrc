@@ -9,7 +9,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'                  " 插件管理工具
 Plugin 'Align'                              " 对其等号
-Plugin 'Shougo/neocomplcache.vim'           " 自动补全
+Plugin 'Shougo/deoplete.nvim'               " 自动补全
 Plugin 'scrooloose/nerdtree'                " 目录树
 Plugin 'mhinz/vim-grepper'                  " 文件内容搜索
 Plugin 'yssl/QFEnter'                       " quick-fix 窗口快捷键
@@ -17,6 +17,7 @@ Plugin 'majutsushi/tagbar'                  " 函数列表
 Plugin 'mru.vim'                            " 最近打开的文件
 Plugin 'ctrlpvim/ctrlp.vim'                 " 文件名搜索
 Plugin 'ronakg/quickr-cscope.vim'           " cscope 跳转
+Plugin 'tpope/vim-fugitive'                 " git 操作
 Plugin 'lifepillar/vim-solarized8'          " solarized 主题
 Plugin 'vim-airline/vim-airline'            " 状态栏
 Plugin 'vim-airline/vim-airline-themes'     " 状态栏主题
@@ -66,6 +67,7 @@ set nofoldenable            "关闭代码折叠
 set clipboard=unnamed       " use the system clipboard
 set nois                    " 设置搜索不自动跳转
 set mouse=a                 " 支持鼠标滚动
+set diffopt=vertical        " diff 窗口纵排
 "}} 通用配置结束
 
 "{{ 快捷键配置
@@ -95,14 +97,13 @@ let g:airline_symbols.maxlinenr = ''
 "}
 
 "nerdtree{ 目录树配置
-map <C-T> :NERDTree<CR>
+map <C-t> :NERDTree<CR>
 "}
 "
 
-"neocomplcache{ 自动补全
-let g:neocomplcache_enable_at_startup = 1
+"deoplete{ 自动补全
+let g:deoplete#enable_at_startup = 1
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-"inoremap <expr><space>  pumvisible() ? neocomplcache#close_popup() : "\<SPACE>"
 "}
 
 "Align{ 字符对齐
@@ -140,7 +141,7 @@ let g:grepper.ag.grepprg = 'ag --vimgrep $* '.g:root_dir
 let g:qfenter_keymap = {}
 let g:qfenter_keymap.vopen = ['<C-v>']
 let g:qfenter_keymap.hopen = ['<C-CR>', '<C-s>', '<C-x>']
-let g:qfenter_keymap.topen = ['<C-t>']
+let g:qfenter_keymap.topen = ['t']
 "}
 
 "promptline{
@@ -165,7 +166,7 @@ let g:tmuxline_preset = {
             \'cwin' : '#I #W #F',
             \'x'    : '%Y-%m-%d',
             \'y'    : '%H:%M:%S',
-            \'z'    : '#h',
+            \'z'    : "#(ifconfig | grep inet[^6] | awk -F'[:\t ]+' '{print $3,$4}' | sed 's/netmask//; s/addr//; s/ //' | grep -v '127.0.0.1' | grep -v '^10.0')",
             \'options': {
             \'status-justify':'left'}
             \}
@@ -179,35 +180,38 @@ xmap tb :TagbarToggle<cr>
 "ctrlp{
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 "set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
-
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_types = ['fil', 'mru']
 let g:ctrlp_custom_ignore = {
             \ 'dir':  '\v[\/]\.(git|hg|svn)$',
             \ 'file': '\v\.(exe|so|dll)$',
             \ 'link': 'some_bad_symbolic_links',
             \ }
+let g:NERDTreeChDirMode       = 2
+let g:ctrlp_working_path_mode = 'rw'
 "}
 
 "cscope{
 let g:quickr_cscope_use_qf_g = 1
 let g:quickr_cscope_autoload_db = 0
 if has("cscope")
-    exe 'cs add '.g:root_dir.'/cscope.out '.g:root_dir
+    let g:cscope_out = g:root_dir.'/cscope.out'
+    if filereadable(g:cscope_out)
+        silent exe 'cs add '.g:cscope_out.' '.g:root_dir
+    endif
     set csto=1
     set cst
 endif
 "}
-
 "}} 插件配置结束
 
 " 保存时自动删除行尾空格
-func! DeleteTrailingWS()
+function! DeleteTrailingWS()
     %ret! 4
     exe "normal mz"
     %s/\s\+$//ge
     exe "normal `z"
     :w
-endfunc
+endfunction
 "autocmd BufWrite * :call DeleteTrailingWS()
 command W call DeleteTrailingWS()
 
@@ -215,12 +219,10 @@ command W call DeleteTrailingWS()
 au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
 
 " 保存执行ctags
-func! UPDATE_TAGS()
-    exe "!cd ".g:root_dir
-    exe "!ctags -R"
-    exe "!cscope -Rbqk"
+function! UpdateTags()
+    exe "!cd ".g:root_dir." && ctags -R"
+    exe "!cd ".g:root_dir." && cscope -Rbqk"
     :cs reset <CR><CR>
-endfunc
+endfunction
 "autocmd BufWrite *.cpp,*.h,*.c,*.lua call UPDATE_TAGS()
-command Ctags call UPDATE_TAGS()
-
+command Ctags call UpdateTags()
