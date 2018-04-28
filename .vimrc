@@ -1,44 +1,33 @@
-set nocompatible
-filetype off
-
-"{{ 插件安装
-"git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+"{{ 插件安装 vim-plug
+"curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+call plug#begin('~/.vim/plugged')
 "PluginInstall
-"set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim'                  " 插件管理工具
-Plugin 'Align'                              " 对其等号
-Plugin 'Shougo/deoplete.nvim'               " 自动补全
-Plugin 'scrooloose/nerdtree'                " 目录树
-Plugin 'mhinz/vim-grepper'                  " 文件内容搜索
-Plugin 'yssl/QFEnter'                       " quick-fix 窗口快捷键
-Plugin 'majutsushi/tagbar'                  " 函数列表
-Plugin 'mru.vim'                            " 最近打开的文件
-Plugin 'ctrlpvim/ctrlp.vim'                 " 文件名搜索
-Plugin 'ronakg/quickr-cscope.vim'           " cscope 跳转
-Plugin 'tpope/vim-fugitive'                 " git 操作
-Plugin 'lifepillar/vim-solarized8'          " solarized 主题
-Plugin 'vim-airline/vim-airline'            " 状态栏
-Plugin 'vim-airline/vim-airline-themes'     " 状态栏主题
-Plugin 'edkolev/tmuxline.vim'               " 生成 tmuxline color
-Plugin 'edkolev/promptline.vim'             " 生成 bash path color
-"Plugin 'dantezhu/authorinfo'                " 插入作者信息
-"Plugin 'posva/vim-vue'                      " vue syntax color
-"Plugin 'mustache/vim-mustache-handlebars'   " vue 模板 syntax color
-call vundle#end()
-filetype plugin indent on
-"}} 插件安装结束
+Plug 'scrooloose/nerdtree'                " 目录树
+Plug 'ludovicchabant/vim-gutentags'       " 自动生成 tags
+Plug 'mhinz/vim-grepper'                  " 文件内容搜索
+Plug 'yssl/QFEnter'                       " quick-fix 窗口快捷键
+Plug 'tpope/vim-fugitive'                 " git 操作
+Plug 'roxma/nvim-completion-manager'      " 自动补全
+Plug 'Yggdroot/LeaderF'                   " 文件列表和函数列表
+Plug 'skywind3000/vim-preview'            " 预览代码
+
+Plug 'lifepillar/vim-solarized8'          " solarized 主题
+Plug 'vim-airline/vim-airline'            " 状态栏
+Plug 'vim-airline/vim-airline-themes'     " 状态栏主题
+Plug 'edkolev/tmuxline.vim'               " 生成 tmuxline color
+Plug 'edkolev/promptline.vim'             " 生成 bash path color
+call plug#end()
 
 "{{ 主题
-syn enable
 set background=dark
 "set background=light
-syn on                                 "语法支持
-colorscheme solarized8_dark_high       "设置颜色主题
+syn on
+syn enable
+colorscheme solarized8  "设置颜色主题
 "}}
 
 "{{ 通用配置
+set nocompatible
 set ai                      "自动缩进
 set si
 set bs=2                    "在insert模式下用退格键删除
@@ -53,7 +42,6 @@ set number                  "显示行号
 set autoread                "文件在Vim之外修改过，自动重新读入
 set autowriteall            "设置自动保存
 set autochdir
-set tags=tags;/
 set ignorecase              "检索时忽略大小写
 set encoding=utf-8
 set fileencoding=utf-8      "使用utf-8新建文件
@@ -61,13 +49,18 @@ set fileencodings=utf-8,gbk "使用utf-8或gbk打开文件
 let &termencoding=&encoding "
 set hls                     "检索时高亮显示匹配项
 set helplang=cn             "帮助系统设置为中文
-"set foldmethod=syntax      "代码折叠
 set nofoldenable            "关闭代码折叠
-"set term=screen
 set clipboard=unnamed       " use the system clipboard
 set nois                    " 设置搜索不自动跳转
+set noshowmode
 set mouse=a                 " 支持鼠标滚动
 set diffopt=vertical        " diff 窗口纵排
+set wildignore=*.swp,*.bak,*.pyc,*.obj,*.o,*.class
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+set wildignore+=*\\tmp\\*,*.exe              " Windows
+set tags=./.tags;,.tags
+set ttimeout
+set ttimeoutlen=100
 "}} 通用配置结束
 
 "{{ 快捷键配置
@@ -75,12 +68,31 @@ set diffopt=vertical        " diff 窗口纵排
 let mapleader = ','
 nnoremap <C-l> gt
 nnoremap <C-h> gT
-
-"大写字母
-inoremap <c-u> <esc>gUiwea
 "}} 快捷键配置结束
 
 "{{ 插件配置
+
+"gutentags{
+" gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
+let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+
+" 所生成的数据文件的名称
+let g:gutentags_ctags_tagfile = '.tags'
+
+" 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+let s:vim_tags = expand('~/.cache/tags')
+let g:gutentags_cache_dir = s:vim_tags
+
+" 配置 ctags 的参数
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+
+" 检测 ~/.cache/tags 不存在就新建
+if !isdirectory(s:vim_tags)
+    silent! call mkdir(s:vim_tags, 'p')
+endif
+"}
 
 "airline{ 状态栏的配置
 set laststatus=2
@@ -94,44 +106,40 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.linenr = ''
 "}
 
 "nerdtree{ 目录树配置
-map <C-t> :NERDTree<CR>
-"}
-"
+map <leader>t :NERDTreeToggle<cr>
+let NERDTreeIgnore = ['\~$', '\$.*$', '\.swp$', '\.pyc$', '#.\{-\}#$']
+let s:ignore = ['.xls', '.xlsx', '.mobi', '.mp4', '.mp3']
 
-"deoplete{ 自动补全
-let g:deoplete#enable_at_startup = 1
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-"}
+for s:extname in s:ignore
+    let NERDTreeIgnore += [escape(s:extname, '.~$')]
+endfor
 
-"Align{ 字符对齐
-vmap gn :Align=<CR>
-"}
-
-"authoinfo{ 文件头模板
-nmap <F4> :AuthorInfoDetect<cr>
-let g:vimrc_author='hanxi'
-let g:vimrc_email='hanxi.com@gmail.com'
-let g:vimrc_homepage='http://hanxi.info'
+let NERDTreeRespectWildIgnore = 1
+let g:NERDTreeChDirMode       = 0
 "}
 
 "grepper{
+" 查找工程目录
 function! FindProjectRoot(lookFor)
+    let s:root=expand('%:p:h')
     let pathMaker='%:p'
     while(len(expand(pathMaker))>len(expand(pathMaker.':h')))
         let pathMaker=pathMaker.':h'
         let fileToCheck=expand(pathMaker).'/'.a:lookFor
         if filereadable(fileToCheck)||isdirectory(fileToCheck)
-            return expand(pathMaker)
+            let s:root=expand(pathMaker)
         endif
     endwhile
-    return expand('%:p:h')
+    return s:root
 endfunction
 let g:root_dir = FindProjectRoot('.git')
-nmap gs  <plug>(GrepperOperator)
-xmap gs  <plug>(GrepperOperator)
+autocmd BufEnter * silent! lcd g:root_dir
+nmap gs <plug>(GrepperOperator)
+xmap gs <plug>(GrepperOperator)
 let g:grepper = {}
 let g:grepper.ag = {}
 let g:grepper.ag.grepprg = 'ag --vimgrep $* '.g:root_dir
@@ -144,17 +152,50 @@ let g:qfenter_keymap.hopen = ['<C-CR>', '<C-s>', '<C-x>']
 let g:qfenter_keymap.topen = ['t']
 "}
 
+"LeaderF{
+let g:Lf_ShortcutF = '<c-p>'
+noremap <c-n> :LeaderfMru<cr>
+noremap <m-p> :LeaderfFunction<cr>
+let g:Lf_MruMaxFiles = 64
+let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
+let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
+let g:Lf_WorkingDirectoryMode = 'Ac'
+let g:Lf_WindowHeight = 0.30
+let g:Lf_CacheDirectory = expand('~/.vim/cache')
+let g:Lf_ShowRelativePath = 0
+let g:Lf_HideHelp = 1
+let g:Lf_StlColorscheme = 'powerline'
+"}
+
+"NCM{
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+"}
+
+"vim-preview{
+noremap <m-u> :PreviewScroll -1<cr>
+noremap <m-d> :PreviewScroll +1<cr>
+inoremap <m-u> <c-\><c-o>:PreviewScroll -1<cr>
+inoremap <m-d> <c-\><c-o>:PreviewScroll +1<cr>
+autocmd FileType qf nnoremap <silent><buffer> p :PreviewQuickfix<cr>
+autocmd FileType qf nnoremap <silent><buffer> P :PreviewClose<cr>
+noremap <m-n> :PreviewSignature!<cr>
+inoremap <m-n> <c-\><c-o>:PreviewSignature!<cr>
+noremap <leader>g :PreviewTag<cr>
+inoremap <leader>g <c-\><c-o>:PreviewTag<cr>
+"}
+
 "promptline{
 ":PromptlineSnapshot ~/.shell_prompt.sh airline
 let g:promptline_symbols = {
             \ 'truncation'     : '…'
-            \}
+            \ }
 let g:promptline_preset = {
-            \'a' : [ promptline#slices#user() ],
-            \'c' : [ promptline#slices#cwd() ],
-            \'y' : [ promptline#slices#vcs_branch() ],
-            \'warn' : [ promptline#slices#last_exit_code() ]
-            \}
+            \ 'a' : [ promptline#slices#user() ],
+            \ 'c' : [ promptline#slices#cwd() ],
+            \ 'y' : [ promptline#slices#vcs_branch() ],
+            \ 'warn' : [ promptline#slices#last_exit_code() ]
+            \ }
 "}
 
 "tmuxline{
@@ -172,39 +213,9 @@ let g:tmuxline_preset = {
             \}
 "}
 
-"tagbar{
-map tb :TagbarToggle<cr>
-xmap tb :TagbarToggle<cr>
-"}
-
-"ctrlp{
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
-"set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
-let g:ctrlp_types = ['fil', 'mru']
-let g:ctrlp_custom_ignore = {
-            \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-            \ 'file': '\v\.(exe|so|dll)$',
-            \ 'link': 'some_bad_symbolic_links',
-            \ }
-let g:NERDTreeChDirMode       = 2
-let g:ctrlp_working_path_mode = 'rw'
-"}
-
-"cscope{
-let g:quickr_cscope_use_qf_g = 1
-let g:quickr_cscope_autoload_db = 0
-if has("cscope")
-    let g:cscope_out = g:root_dir.'/cscope.out'
-    if filereadable(g:cscope_out)
-        silent exe 'cs add '.g:cscope_out.' '.g:root_dir
-    endif
-    set csto=1
-    set cst
-endif
-"}
 "}} 插件配置结束
 
-" 保存时自动删除行尾空格
+"{ 保存时自动删除行尾空格
 function! DeleteTrailingWS()
     %ret! 4
     exe "normal mz"
@@ -212,17 +223,9 @@ function! DeleteTrailingWS()
     exe "normal `z"
     :w
 endfunction
-"autocmd BufWrite * :call DeleteTrailingWS()
 command W call DeleteTrailingWS()
+"}
 
-" 记住上次编辑的位置
+"{ 记住上次编辑的位置
 au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
-
-" 保存执行ctags
-function! UpdateTags()
-    exe "!cd ".g:root_dir." && ctags -R"
-    exe "!cd ".g:root_dir." && cscope -Rbqk"
-    :cs reset <CR><CR>
-endfunction
-"autocmd BufWrite *.cpp,*.h,*.c,*.lua call UPDATE_TAGS()
-command Ctags call UpdateTags()
+"}
