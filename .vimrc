@@ -41,7 +41,6 @@ set cursorcolumn            "为光标所在行加下划线
 set number                  "显示行号
 set autoread                "文件在Vim之外修改过，自动重新读入
 set autowriteall            "设置自动保存
-set autochdir
 set ignorecase              "检索时忽略大小写
 set encoding=utf-8
 set fileencoding=utf-8      "使用utf-8新建文件
