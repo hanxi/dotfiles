@@ -109,7 +109,10 @@ let g:airline_symbols.linenr = ''
 "}
 
 "nerdtree{ 目录树配置
-map <leader>t :NERDTreeToggle<cr>
+function! ToggleNERDTree()
+    silent exe ':NERDTree '.expand('%:p:h')
+endfunction
+map <leader>t :call ToggleNERDTree()<cr>
 let NERDTreeIgnore = ['\~$', '\$.*$', '\.swp$', '\.pyc$', '#.\{-\}#$']
 let s:ignore = ['.xls', '.xlsx', '.mobi', '.mp4', '.mp3']
 
