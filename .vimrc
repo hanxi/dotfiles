@@ -3,13 +3,18 @@
 call plug#begin('~/.vim/plugged')
 "PluginInstall
 Plug 'scrooloose/nerdtree'                " 目录树
-Plug 'ludovicchabant/vim-gutentags'       " 自动生成 tags
+Plug 'jsfaint/gen_tags.vim'               " 自动生成 tags
 Plug 'mhinz/vim-grepper'                  " 文件内容搜索
 Plug 'yssl/QFEnter'                       " quick-fix 窗口快捷键
 Plug 'tpope/vim-fugitive'                 " git 操作
-Plug 'roxma/nvim-completion-manager'      " 自动补全
+Plug 'ncm2/ncm2'                          " 自动补全
+Plug 'roxma/nvim-yarp'                    " for ncm2
+Plug 'ncm2/ncm2-bufword'                  " ncm2
+Plug 'ncm2/ncm2-path'                     " ncm2
 Plug 'Yggdroot/LeaderF'                   " 文件列表和函数列表
 Plug 'skywind3000/vim-preview'            " 预览代码
+
+Plug 'git@gitlab.rd.175game.com:qn/qtz-pastec-vim.git'
 
 Plug 'lifepillar/vim-solarized8'          " solarized 主题
 Plug 'vim-airline/vim-airline'            " 状态栏
@@ -55,8 +60,8 @@ set noshowmode
 set mouse=a                 " 支持鼠标滚动
 set diffopt=vertical        " diff 窗口纵排
 set wildignore=*.swp,*.bak,*.pyc,*.obj,*.o,*.class
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
-set wildignore+=*\\tmp\\*,*.exe              " Windows
+set wildignore+=*.so,*.swp,*.zip     " MacOSX/Linux
+set wildignore+=*.exe              " Windows
 set tags=./.tags;,.tags
 set ttimeout
 set ttimeoutlen=100
@@ -71,26 +76,24 @@ nnoremap <C-h> gT
 
 "{{ 插件配置
 
-"gutentags{
-" gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
-let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+"gen_tags{
+" 将自动生成的 tags 文件全部放入 ~/.cache/tags_dir 目录中，避免污染工程目录
+let g:gen_tags#use_cache_dir = 1
 
-" 所生成的数据文件的名称
-let g:gutentags_ctags_tagfile = '.tags'
-
-" 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
-let s:vim_tags = expand('~/.cache/tags')
-let g:gutentags_cache_dir = s:vim_tags
+" disable gtags
+let g:loaded_gentags#gtags = 1
+" auto ctags
+let g:gen_tags#ctags_auto_gen = 1
+" disable map
+let g:gen_tags#gtags_default_map = 0
 
 " 配置 ctags 的参数
-let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+let g:gen_tags#ctags_opts = ['--fields=+niazS', '--extra=+q']
+let g:gen_tags#ctags_opts += ['--c++-kinds=+px']
+let g:gen_tags#ctags_opts += ['--c-kinds=+px']
 
-" 检测 ~/.cache/tags 不存在就新建
-if !isdirectory(s:vim_tags)
-    silent! call mkdir(s:vim_tags, 'p')
-endif
+" auto update .tags
+let g:gen_tags#ctags_prune = 1
 "}
 
 "airline{ 状态栏的配置
@@ -139,7 +142,7 @@ function! FindProjectRoot(lookFor)
     return s:root
 endfunction
 let g:root_dir = FindProjectRoot('.git')
-autocmd BufEnter * silent! lcd g:root_dir
+autocmd BufEnter * exe ':cd '.g:root_dir
 nmap gs <plug>(GrepperOperator)
 xmap gs <plug>(GrepperOperator)
 let g:grepper = {}
@@ -167,11 +170,17 @@ let g:Lf_CacheDirectory = expand('~/.vim/cache')
 let g:Lf_ShowRelativePath = 0
 let g:Lf_HideHelp = 1
 let g:Lf_StlColorscheme = 'powerline'
+let g:Lf_UseCache = 0
 "}
 
-"NCM{
+"NCM2{
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+
+" IMPORTANTE: :help Ncm2PopupOpen for more information
+set completeopt=noinsert,menuone,noselect
 "}
 
 "vim-preview{
