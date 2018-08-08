@@ -1,7 +1,7 @@
 "{{ 插件安装 vim-plug
 "curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 call plug#begin('~/.vim/plugged')
-"PluginInstall
+"PlugInstall
 Plug 'scrooloose/nerdtree'                " 目录树
 Plug 'jsfaint/gen_tags.vim'               " 自动生成 tags
 Plug 'mhinz/vim-grepper'                  " 文件内容搜索
