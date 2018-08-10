@@ -13,6 +13,7 @@ Plug 'ncm2/ncm2-bufword'                  " ncm2
 Plug 'ncm2/ncm2-path'                     " ncm2
 Plug 'Yggdroot/LeaderF'                   " 文件列表和函数列表
 Plug 'skywind3000/vim-preview'            " 预览代码
+Plug 'hanxi/gutentags_plus'               " for gen_tags
 
 Plug 'git@gitlab.rd.175game.com:qn/qtz-pastec-vim.git'
 
@@ -79,21 +80,23 @@ nnoremap <C-h> gT
 "gen_tags{
 " 将自动生成的 tags 文件全部放入 ~/.cache/tags_dir 目录中，避免污染工程目录
 let g:gen_tags#use_cache_dir = 1
-
-" disable gtags
-let g:loaded_gentags#gtags = 1
-" auto ctags
-let g:gen_tags#ctags_auto_gen = 1
+" disable ctags
+let g:loaded_gentags#ctags = 1
+" auto gtags
+let g:gen_tags#gtags_auto_gen = 1
 " disable map
 let g:gen_tags#gtags_default_map = 0
-
-" 配置 ctags 的参数
-let g:gen_tags#ctags_opts = ['--fields=+niazS', '--extra=+q']
-let g:gen_tags#ctags_opts += ['--c++-kinds=+px']
-let g:gen_tags#ctags_opts += ['--c-kinds=+px']
-
-" auto update .tags
-let g:gen_tags#ctags_prune = 1
+" gtags
+let $GTAGSLABEL = 'native'
+let $GTAGSCONF = expand('~/.gtags.conf')
+let g:gutentags_plus_nomap = 1
+let g:gutentags_plus_switch = 0
+noremap <silent> <leader>g :GscopeFind g <C-R><C-W><cr>
+noremap <silent> <leader>s :GscopeFind s <C-R><C-W><cr>
+noremap <silent> <leader>c :GscopeFind c <C-R><C-W><cr>
+noremap <silent> <leader>f :GscopeFind f <C-R>=expand("<cfile>")<cr><cr>
+noremap <silent> <leader>i :GscopeFind i <C-R>=expand("<cfile>")<cr><cr>
+map <leader>q :ccl<cr>
 "}
 
 "airline{ 状态栏的配置
@@ -192,8 +195,6 @@ autocmd FileType qf nnoremap <silent><buffer> p :PreviewQuickfix<cr>
 autocmd FileType qf nnoremap <silent><buffer> P :PreviewClose<cr>
 noremap <m-n> :PreviewSignature!<cr>
 inoremap <m-n> <c-\><c-o>:PreviewSignature!<cr>
-noremap <leader>g :PreviewTag<cr>
-inoremap <leader>g <c-\><c-o>:PreviewTag<cr>
 "}
 
 "promptline{
