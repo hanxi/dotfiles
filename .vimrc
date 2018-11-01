@@ -17,19 +17,30 @@ Plug 'hanxi/gutentags_plus'               " for gen_tags
 
 Plug 'git@gitlab.rd.175game.com:qn/qtz-pastec-vim.git'
 
-Plug 'lifepillar/vim-solarized8'          " solarized 主题
+Plug 'sheerun/vim-polyglot'               " 语法集合
 Plug 'vim-airline/vim-airline'            " 状态栏
 Plug 'vim-airline/vim-airline-themes'     " 状态栏主题
 Plug 'edkolev/tmuxline.vim'               " 生成 tmuxline color
 Plug 'edkolev/promptline.vim'             " 生成 bash path color
+Plug 'arcticicestudio/nord-vim'           " 颜色主题
 call plug#end()
 
 "{{ 主题
 set background=dark
-"set background=light
 syn on
 syn enable
-colorscheme solarized8  "设置颜色主题
+colorscheme nord
+let g:nord_italic = 1
+let g:nord_underline = 1
+"}}
+
+"{{ 配置行尾标识符
+" Need use font: Source Code Pro
+set list
+set listchars=tab:→\ ,trail:·,eol:¬,extends:…,precedes:…
+" 高亮行尾空格和中间 tab
+highlight RedundantSpaces ctermbg=red guibg=red
+match RedundantSpaces /\s\+$\|\t/
 "}}
 
 "{{ 通用配置
