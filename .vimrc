@@ -17,21 +17,21 @@ Plug 'hanxi/gutentags_plus'               " for gen_tags
 
 Plug 'git@gitlab.rd.175game.com:qn/qtz-pastec-vim.git'
 
-Plug 'sheerun/vim-polyglot'               " 语法集合
 Plug 'vim-airline/vim-airline'            " 状态栏
 Plug 'vim-airline/vim-airline-themes'     " 状态栏主题
 Plug 'edkolev/tmuxline.vim'               " 生成 tmuxline color
 Plug 'edkolev/promptline.vim'             " 生成 bash path color
 Plug 'arcticicestudio/nord-vim'           " 颜色主题
+Plug 'plasticboy/vim-markdown'
 call plug#end()
 
 "{{ 主题
 set background=dark
 syn on
 syn enable
-colorscheme nord
 let g:nord_italic = 1
-let g:nord_underline = 1
+let g:nord_cursor_line_number_background = 1
+colorscheme nord
 "}}
 
 "{{ 配置行尾标识符
@@ -236,6 +236,10 @@ let g:tmuxline_preset = {
             \}
 "}
 
+"{ vim-markdown
+let g:vim_markdown_folding_disabled = 1
+"}
+
 "}} 插件配置结束
 
 "{ 保存时自动删除行尾空格
@@ -251,4 +255,29 @@ command W call DeleteTrailingWS()
 
 "{ 记住上次编辑的位置
 au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
+"}
+
+"{ 热更服务器
+function! HotFixServer(server)
+    let s:server = tolower(a:server)
+    if s:server == ''
+        let s:server = 'userd'
+    endif
+    if expand('%:e') == 'c'
+        let s:autoupdatefile = g:root_dir.'/etc/autoupdate.ini'
+        if filereadable(s:autoupdatefile)
+            let l:curfile = substitute(expand('%:p'), g:root_dir, "", "")
+            let l:context = '['.s:server.']\\\n'.l:curfile
+            silent exe '!echo -e 'l:context' > 's:autoupdatefile
+            :redraw!
+            :echo "Updated autoupdate.ini"
+        else
+            :echo "Error! Hot need create autoupdate.ini file."
+        endif
+    else
+        :echo "Error! Hot only support *.c file."
+    endif
+endfunction
+" :H [userd/fightd...] 命令自动热更当前编辑的文件，默认userd
+command -nargs=? H call HotFixServer(<q-args>)
 "}
