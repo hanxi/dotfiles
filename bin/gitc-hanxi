@@ -1,0 +1,10 @@
+#! /usr/bin/env bash
+
+name="涵曦"
+email="hanxi.info@gmail.com"
+echo "Git info:"
+echo $name
+echo $email
+git config --global user.name $name
+git config --global user.email $email
+
