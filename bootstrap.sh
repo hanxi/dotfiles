@@ -37,7 +37,7 @@ sed -i "\:$ETC/vimrc.vim:d" ~/.vimrc
 echo "source $ETC/vimrc.vim" >> ~/.vimrc
 
 # install vim plug
-vim +PlugInstall +qall
+nvim +PlugInstall +qall
 
 # source tmux.conf
 touch ~/.tmux.conf

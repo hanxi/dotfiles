@@ -1,6 +1,6 @@
 # Hanxi's dotfiles
 
-bash + tmux + vim
+bash + tmux + neovim
 
 ## Installation
 
