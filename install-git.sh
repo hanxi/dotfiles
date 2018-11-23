@@ -28,5 +28,6 @@ fi
 # ./configure --prefix=$HOME/.local
 # make install
 # cd ~/app-src/git-${version}
+# make configure
 # ./configure --prefix=$HOME/.local --with-iconv=$HOME/.local/lib
 
