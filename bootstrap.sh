@@ -36,9 +36,6 @@ touch ~/.vimrc
 sed -i "\:$ETC/vimrc.vim:d" ~/.vimrc
 echo "source $ETC/vimrc.vim" >> ~/.vimrc
 
-# install vim plug
-nvim +PlugInstall +qall
-
 # source tmux.conf
 touch ~/.tmux.conf
 sed -i "\:$ETC/tmux.conf.vim:d" ~/.tmux.conf
@@ -50,4 +47,7 @@ git config --global color.diff auto
 git config --global color.branch auto
 git config --global color.interactive auto
 git config --global core.quotepath false
+
+# install vim plug (may be some bugs)
+nvim +PlugInstall +qall
 
