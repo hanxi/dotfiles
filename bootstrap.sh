@@ -25,6 +25,7 @@ cp $ETC/lemonade.toml ~/.config/lemonade.toml
 # source init.sh
 sed -i "\:$ETC/init.sh:d" ~/.bashrc
 echo ". $ETC/init.sh" >> ~/.bashrc
+. ~/.bashrc
 
 # for neovim
 mkdir -p ~/.config/nvim
@@ -42,8 +43,6 @@ vim +PlugInstall +qall
 touch ~/.tmux.conf
 sed -i "\:$ETC/tmux.conf.vim:d" ~/.tmux.conf
 echo "source $ETC/tmux.conf" >> ~/.tmux.conf
-
-. ~/.bashrc
 
 # update git config
 git config --global color.status auto
