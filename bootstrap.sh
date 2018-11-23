@@ -38,7 +38,7 @@ echo "source $ETC/vimrc.vim" >> ~/.vimrc
 
 # source tmux.conf
 touch ~/.tmux.conf
-sed -i "\:$ETC/tmux.conf.vim:d" ~/.tmux.conf
+sed -i "\:$ETC/tmux.conf:d" ~/.tmux.conf
 echo "source $ETC/tmux.conf" >> ~/.tmux.conf
 
 # update git config
