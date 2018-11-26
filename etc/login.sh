@@ -1,3 +1,5 @@
 # auto start tmux
-[ -z "$TMUX"  ] && { tmux attach || exec tmux new && exit;}
+if [ -z "$TMUX"  ]; then
+    tmux a || tmux
+fi
 

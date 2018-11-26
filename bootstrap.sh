@@ -6,8 +6,8 @@ mkdir -p $ETC
 mkdir -p $BIN
 
 # git clone respository
-mkdir -p .tmp
-cd .tmp
+mkdir -p ~/.tmp
+cd ~/.tmp
 rm -rf dotfiles
 git clone git@github.com:hanxi/dotfiles.git
 cd dotfiles
