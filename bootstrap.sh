@@ -16,6 +16,7 @@ else
 fi
 cp -rf etc/* $ETC/
 cp -rf bin/* $BIN/
+cp bootstrap.sh $BIN/
 
 # setup lemonade
 # TODO check sys_type
