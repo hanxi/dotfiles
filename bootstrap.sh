@@ -6,11 +6,14 @@ mkdir -p $ETC
 mkdir -p $BIN
 
 # git clone respository
-mkdir -p ~/.tmp
-cd ~/.tmp
-rm -rf dotfiles
-git clone git@github.com:hanxi/dotfiles.git
-cd dotfiles
+cd ~/.local/
+if [ -d dotfiles ]; then
+    cd dotfiles
+    git pull
+else
+    git clone git@github.com:hanxi/dotfiles.git
+    cd dotfiles
+fi
 cp -rf etc/* $ETC/
 cp -rf bin/* $BIN/
 
