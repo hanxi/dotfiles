@@ -1,9 +1,9 @@
 #! /usr/bin/env bash
 
 # 加密(执行后获得加密码)
-# echo  abc  | openssl aes-128-cbc -base64 -k 123
+# echo  abc  | openssl aes-128-cbc -md md5 -base64 -k 123
 #解密(加密码太长,用*表示了)
-# echo ***** | openssl aes-128-cbc -d -base64 -k 123
+# echo ***** | openssl aes-128-cbc -md md5 -d -base64 -k 123
 
 if [ -z $1 ]; then
     echo -n "Inpur password:"
@@ -13,8 +13,8 @@ else
     password = $1
 fi
 
-name=$(echo U2FsdGVkX1+fqfx2Ksfh3vNcurmh+0sUMnIaaivwXpM= | openssl aes-128-cbc -d -base64 -k $password)
-email=$(echo U2FsdGVkX18c2hl2rvCqnGThKOm9s7qNQggNgsaocVkzWXt1ph81mrDcDrrEnBZn | openssl aes-128-cbc -d -base64 -k $password)
+name=`echo rYISPULpjdC7SFIajUcgWw== | openssl enc -aes-128-cbc -md md5 -nosalt -base64 -d -k $password`
+email=`echo JHSUT4l+iax230ZK4K8r08b4Hz7IGziwX9B9FvTPksw= | openssl enc -aes-128-cbc -md md5 -nosalt -base64 -d -k $password`
 echo "Git info:"
 echo $name
 echo $email
