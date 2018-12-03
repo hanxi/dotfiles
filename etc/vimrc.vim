@@ -22,8 +22,9 @@ Plug 'edkolev/promptline.vim'             " 生成 bash path color
 Plug 'arcticicestudio/nord-vim'           " 颜色主题
 Plug 'plasticboy/vim-markdown'
 
-Plug 'ncm2/ncm2'                          " 自动补全
+Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'roxma/nvim-yarp'                    " for ncm2
+Plug 'ncm2/ncm2'                          " 自动补全
 Plug 'ncm2/ncm2-bufword'                  " ncm2
 Plug 'ncm2/ncm2-path'                     " ncm2
 call plug#end()
@@ -44,8 +45,8 @@ endif
 set list
 set listchars=tab:→\ ,trail:·,eol:¬,extends:…,precedes:…
 " 高亮行尾空格和中间 tab
-highlight RedundantSpaces ctermbg=red guibg=red
-match RedundantSpaces /\s\+$\|\t/
+"highlight RedundantSpaces ctermbg=red guibg=red
+"match RedundantSpaces /\s\+$\|\t/
 "}}
 
 "{{ 通用配置
@@ -54,10 +55,9 @@ set ai                      "自动缩进
 set si
 set bs=2                    "在insert模式下用退格键删除
 set showmatch               "代码匹配
-set expandtab               "以下三个配置配合使用，设置tab和缩进空格数
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4
+"设置tab和缩进空格数
+"set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+set tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
 set cursorline              "为光标所在行加下划线
 set cursorcolumn            "为光标所在行加下划线
 set number                  "显示行号
@@ -94,6 +94,7 @@ nnoremap <C-h> gT
 "{{ 插件配置
 
 "gen_tags{
+let g:gutentags_define_advanced_commands = 1
 " 将自动生成的 tags 文件全部放入 ~/.cache/tags_dir 目录中，避免污染工程目录
 let g:gen_tags#use_cache_dir = 1
 " disable ctags
@@ -144,6 +145,8 @@ endfor
 
 let NERDTreeRespectWildIgnore = 1
 let g:NERDTreeChDirMode       = 0
+let g:NERDTreeDirArrowExpandable = '+'
+let g:NERDTreeDirArrowCollapsible = '-'
 "}
 
 "grepper{
@@ -196,9 +199,7 @@ let g:Lf_UseCache = 0
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " enable ncm2 for all buffers
-if !empty(globpath(&rtp, "ncm2.vim"))
-    autocmd BufEnter * call ncm2#enable_for_buffer()
-endif
+autocmd BufEnter * call ncm2#enable_for_buffer()
 " IMPORTANTE: :help Ncm2PopupOpen for more information
 set completeopt=noinsert,menuone,noselect
 "}

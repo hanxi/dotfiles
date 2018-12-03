@@ -53,5 +53,5 @@ git config --global color.interactive auto
 git config --global core.quotepath false
 
 # install vim plug (may be some bugs)
-nvim +PlugInstall +qall
+vim +PlugInstall +qall
 
