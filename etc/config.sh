@@ -33,4 +33,5 @@ export rsync_proxy=$http_proxy
 
 # alias
 # alias vim=nvim
+alias svn=svn-color.py
 
