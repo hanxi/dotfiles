@@ -1,32 +1,31 @@
 "{{ 插件安装 vim-plug
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'scrooloose/nerdtree'                " 目录树
-Plug 'jsfaint/gen_tags.vim'               " 自动生成 tags
-Plug 'mhinz/vim-grepper'                  " 文件内容搜索
-Plug 'yssl/QFEnter'                       " quick-fix 窗口快捷键
-Plug 'tpope/vim-fugitive'                 " git 操作
-Plug 'Yggdroot/LeaderF'                   " 文件列表和函数列表
-Plug 'skywind3000/vim-preview'            " 预览代码
-Plug 'hanxi/gutentags_plus'               " for gen_tags
+Plug 'scrooloose/nerdtree'                        " 目录树
+Plug 'jsfaint/gen_tags.vim'                       " 自动生成 tags
+Plug 'mhinz/vim-grepper'                          " 文件内容搜索
+Plug 'yssl/QFEnter'                               " quick-fix 窗口快捷键
+Plug 'tpope/vim-fugitive'                         " git 操作
+Plug 'Yggdroot/LeaderF'                           " 文件列表和函数列表
+Plug 'skywind3000/vim-preview'                    " 预览代码
 
-Plug 'vim-airline/vim-airline'            " 状态栏
-Plug 'vim-airline/vim-airline-themes'     " 状态栏主题
-Plug 'edkolev/tmuxline.vim'               " 生成 tmuxline color
-Plug 'edkolev/promptline.vim'             " 生成 bash path color
-Plug 'arcticicestudio/nord-vim'           " 颜色主题
+Plug 'vim-airline/vim-airline'                    " 状态栏
+Plug 'vim-airline/vim-airline-themes'             " 状态栏主题
+Plug 'edkolev/tmuxline.vim'                       " 生成 tmuxline color
+Plug 'edkolev/promptline.vim'                     " 生成 bash path color
+Plug 'arcticicestudio/nord-vim'                   " 颜色主题
 Plug 'plasticboy/vim-markdown'
 
 Plug 'roxma/vim-hug-neovim-rpc'
-Plug 'roxma/nvim-yarp'                    " for ncm2
-Plug 'ncm2/ncm2'                          " 自动补全
-Plug 'ncm2/ncm2-bufword'                  " ncm2
-Plug 'ncm2/ncm2-path'                     " ncm2
+Plug 'roxma/nvim-yarp'                            " for ncm2
+Plug 'ncm2/ncm2'                                  " 自动补全
+Plug 'ncm2/ncm2-bufword'                          " ncm2
+Plug 'ncm2/ncm2-path'                             " ncm2
 call plug#end()
 
 "{{ 主题
@@ -51,34 +50,34 @@ set listchars=tab:→\ ,trail:·,eol:¬,extends:…,precedes:…
 
 "{{ 通用配置
 set nocompatible
-set ai                      "自动缩进
+set ai                                  "自动缩进
 set si
-set bs=2                    "在insert模式下用退格键删除
-set showmatch               "代码匹配
+set bs=2                                "在insert模式下用退格键删除
+set showmatch                           "代码匹配
 "设置tab和缩进空格数
-"set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
-set tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
-set cursorline              "为光标所在行加下划线
-set cursorcolumn            "为光标所在行加下划线
-set number                  "显示行号
-set autoread                "文件在Vim之外修改过，自动重新读入
-set autowriteall            "设置自动保存
-set ignorecase              "检索时忽略大小写
+set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+"set tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
+set cursorline                          "为光标所在行加下划线
+set cursorcolumn                        "为光标所在行加下划线
+set number                              "显示行号
+set autoread                            "文件在Vim之外修改过，自动重新读入
+set autowriteall                        "设置自动保存
+set ignorecase                          "检索时忽略大小写
 set encoding=utf-8
-set fileencoding=utf-8      "使用utf-8新建文件
-set fileencodings=utf-8,gbk "使用utf-8或gbk打开文件
-let &termencoding=&encoding "
-set hls                     "检索时高亮显示匹配项
-set helplang=cn             "帮助系统设置为中文
-set nofoldenable            "关闭代码折叠
-set clipboard=unnamed       " use the system clipboard
-set nois                    " 设置搜索不自动跳转
+set fileencoding=utf-8                  "使用utf-8新建文件
+set fileencodings=utf-8,gbk             "使用utf-8或gbk打开文件
+let &termencoding=&encoding
+set hls                                 "检索时高亮显示匹配项
+set helplang=cn                         "帮助系统设置为中文
+set nofoldenable                        "关闭代码折叠
+set clipboard=unnamed                   " use the system clipboard
+set nois                                " 设置搜索不自动跳转
 set noshowmode
-set mouse=a                 " 支持鼠标滚动
-set diffopt=vertical        " diff 窗口纵排
+set mouse=a                             " 支持鼠标滚动
+set diffopt=vertical                    " diff 窗口纵排
 set wildignore=*.swp,*.bak,*.pyc,*.obj,*.o,*.class
-set wildignore+=*.so,*.swp,*.zip     " MacOSX/Linux
-set wildignore+=*.exe              " Windows
+set wildignore+=*.so,*.swp,*.zip        " MacOSX/Linux
+set wildignore+=*.exe                   " Windows
 set tags=./.tags;,.tags
 set ttimeout
 set ttimeoutlen=100
@@ -94,7 +93,6 @@ nnoremap <C-h> gT
 "{{ 插件配置
 
 "gen_tags{
-let g:gutentags_define_advanced_commands = 1
 " 将自动生成的 tags 文件全部放入 ~/.cache/tags_dir 目录中，避免污染工程目录
 let g:gen_tags#use_cache_dir = 1
 " disable ctags
@@ -103,17 +101,47 @@ let g:loaded_gentags#ctags = 1
 let g:gen_tags#gtags_auto_gen = 1
 " disable map
 let g:gen_tags#gtags_default_map = 0
+" qucick for gtags
+if v:version >= 800
+    set cscopequickfix=s+,c+,d+,i+,t+,e+,g+,f+,a+
+else
+    set cscopequickfix=s+,c+,d+,i+,t+,e+,g+,f+
+endif
+
+function! s:gen_tags_find(cmd, keyword) abort
+    let l:cur_buf=@%
+    let l:cur_line=line('.')
+    let l:cur_col=col('.')
+    let l:cmd = 'cs find ' . a:cmd . ' ' . a:keyword
+    call setqflist([])
+    let l:success = 1
+    try
+        exec l:cmd
+    catch
+        echo "ERROR: gen_tags_find not found."
+        let l:success = 0
+    endtry
+
+    if l:cur_buf !=# @%
+        bdelete
+    else
+        call cursor(l:cur_line, l:cur_col)
+    endif
+    if success != 0
+        copen
+    endif
+endfunction
+
+noremap <leader>c :call <SID>gen_tags_find('c', "<C-R><C-W>")<CR>
+noremap <leader>f :call <SID>gen_tags_find('f', "<C-R><C-F>")<CR>
+noremap <leader>g :call <SID>gen_tags_find('g', "<C-R><C-W>")<CR>
+noremap <leader>i :call <SID>gen_tags_find('i', "<C-R><C-F>")<CR>
+noremap <leader>s :call <SID>gen_tags_find('s', "<C-R><C-W>")<CR>
+map <leader>q :ccl<cr>
+
 " gtags
 let $GTAGSLABEL = 'native-pygments'
 let $GTAGSCONF = expand('~/.local/etc/gtags.conf')
-let g:gutentags_plus_nomap = 1
-let g:gutentags_plus_switch = 0
-noremap <silent> <leader>g :GscopeFind g <C-R><C-W><cr>
-noremap <silent> <leader>s :GscopeFind s <C-R><C-W><cr>
-noremap <silent> <leader>c :GscopeFind c <C-R><C-W><cr>
-noremap <silent> <leader>f :GscopeFind f <C-R>=expand("<cfile>")<cr><cr>
-noremap <silent> <leader>i :GscopeFind i <C-R>=expand("<cfile>")<cr><cr>
-map <leader>q :ccl<cr>
 "}
 
 "airline{ 状态栏的配置
@@ -144,7 +172,7 @@ for s:extname in s:ignore
 endfor
 
 let NERDTreeRespectWildIgnore = 1
-let g:NERDTreeChDirMode       = 0
+let g:NERDTreeChDirMode           = 0
 let g:NERDTreeDirArrowExpandable = '+'
 let g:NERDTreeDirArrowCollapsible = '-'
 "}
@@ -159,11 +187,15 @@ function! FindProjectRoot(lookFor)
         let fileToCheck=expand(pathMaker).'/'.a:lookFor
         if filereadable(fileToCheck)||isdirectory(fileToCheck)
             let s:root=expand(pathMaker)
+            return s:root
         endif
     endwhile
-    return s:root
+    return ''
 endfunction
 let g:root_dir = FindProjectRoot('.git')
+if empty(g:root_dir)
+    let g:root_dir = FindProjectRoot('.svn')
+endif
 autocmd BufEnter * exe ':cd '.g:root_dir
 nmap gs <plug>(GrepperOperator)
 xmap gs <plug>(GrepperOperator)
@@ -270,24 +302,24 @@ au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|
 function! HotFixServer(server)
     let s:server = tolower(a:server)
     if s:server == ''
-        let s:server = 'userd'
+        let s:server = 'gamed'
     endif
     if expand('%:e') == 'c'
-        let s:autoupdatefile = g:root_dir.'/etc/autoupdate.ini'
+        let s:autoupdatefile = g:root_dir.'/etc/autoupdate_'.s:server
         if filereadable(s:autoupdatefile)
             let l:curfile = substitute(expand('%:p'), g:root_dir, "", "")
-            let l:context = '['.s:server.']\\\n'.l:curfile
+            let l:context = l:curfile
             silent exe '!echo -e 'l:context' > 's:autoupdatefile
             :redraw!
-            :echo "Updated autoupdate.ini"
+            :echo "Updated ".s:autoupdatefile
         else
-            :echo "Error! Hot need create autoupdate.ini file."
+            :echo "Error! Hot need create ".s:autoupdatefile." file."
         endif
     else
         :echo "Error! Hot only support *.c file."
     endif
 endfunction
-" :H [userd/fightd...] 命令自动热更当前编辑的文件，默认userd
+" :H [gamed/netd...] 命令自动热更当前编辑的文件，默认gamed
 command! -nargs=? H call HotFixServer(<q-args>)
 "}
 
