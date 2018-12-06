@@ -210,8 +210,8 @@ let g:qfenter_keymap.topen = ['t']
 
 "LeaderF{
 let g:Lf_ShortcutF = '<c-p>'
-noremap <c-n> :LeaderfMru<cr>
-noremap <m-p> :LeaderfFunction<cr>
+noremap <c-m> :LeaderfMru<cr>
+noremap <c-n> :LeaderfFunction<cr>
 let g:Lf_WorkingDirectoryMode = 'c'
 let g:Lf_MruMaxFiles = 64
 let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
