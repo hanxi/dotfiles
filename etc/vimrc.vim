@@ -41,8 +41,8 @@ endif
 
 "{{ 配置行尾标识符
 " Need use font: Source Code Pro
-set list
-set listchars=tab:→\ ,trail:·,eol:¬,extends:…,precedes:…
+"set list
+"set listchars=tab:→\ ,trail:·,eol:¬,extends:…,precedes:…
 " 高亮行尾空格和中间 tab
 "highlight RedundantSpaces ctermbg=red guibg=red
 "match RedundantSpaces /\s\+$\|\t/
@@ -55,8 +55,8 @@ set si
 set bs=2                                "在insert模式下用退格键删除
 set showmatch                           "代码匹配
 "设置tab和缩进空格数
-set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
-"set tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
+"set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+set tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
 set cursorline                          "为光标所在行加下划线
 set cursorcolumn                        "为光标所在行加下划线
 set number                              "显示行号
@@ -101,6 +101,7 @@ let g:loaded_gentags#ctags = 1
 let g:gen_tags#gtags_auto_gen = 1
 " disable map
 let g:gen_tags#gtags_default_map = 0
+let g:gen_tags#root_reverse = 1
 " qucick for gtags
 if v:version >= 800
     set cscopequickfix=s+,c+,d+,i+,t+,e+,g+,f+,a+
@@ -109,25 +110,25 @@ else
 endif
 
 function! s:gen_tags_find(cmd, keyword) abort
-    let l:cur_buf=@%
-    let l:cur_line=line('.')
-    let l:cur_col=col('.')
-    let l:cmd = 'cs find ' . a:cmd . ' ' . a:keyword
-    call setqflist([])
-    let l:success = 1
-    try
-        exec l:cmd
-    catch
-        echo "ERROR: gen_tags_find not found."
-        let l:success = 0
-    endtry
+    " Mark this position
+    execute "normal! mY"
+    " Close any open quickfix windows
+    cclose
+    " Clear existing quickfix list
+    cal setqflist([])
 
-    if l:cur_buf !=# @%
-        bdelete
-    else
-        call cursor(l:cur_line, l:cur_col)
-    endif
-    if success != 0
+    let l:cur_buf=@%
+    let l:cmd = 'cs find ' . a:cmd . ' ' . a:keyword
+    silent! keepjumps execute l:cmd
+
+    if len(getqflist()) > 1
+        " If the buffer that cscope jumped to is not same as current file, close the buffer
+	if l:cur_buf != @%
+            " Go back to where the command was issued
+            execute "normal! `Y"
+	    " delete previous buffer.
+            bdelete #
+        endif
         copen
     endif
 endfunction
@@ -179,23 +180,7 @@ let g:NERDTreeDirArrowCollapsible = '-'
 
 "grepper{
 " 查找工程目录
-function! FindProjectRoot(lookFor)
-    let s:root=expand('%:p:h')
-    let pathMaker='%:p'
-    while(len(expand(pathMaker))>len(expand(pathMaker.':h')))
-        let pathMaker=pathMaker.':h'
-        let fileToCheck=expand(pathMaker).'/'.a:lookFor
-        if filereadable(fileToCheck)||isdirectory(fileToCheck)
-            let s:root=expand(pathMaker)
-            return s:root
-        endif
-    endwhile
-    return ''
-endfunction
-let g:root_dir = FindProjectRoot('.git')
-if empty(g:root_dir)
-    let g:root_dir = FindProjectRoot('.svn')
-endif
+let g:root_dir = gen_tags#find_project_root()
 autocmd BufEnter * exe ':cd '.g:root_dir
 nmap gs <plug>(GrepperOperator)
 xmap gs <plug>(GrepperOperator)
