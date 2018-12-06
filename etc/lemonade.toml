@@ -1,5 +1,5 @@
 port = 2489
-host = '192.168.16.12'
+host = '192.168.12.20'
 trans-loopback = true
 trans-localfile = true
 line-ending = 'lf'
