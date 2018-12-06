@@ -39,15 +39,6 @@ if !empty(globpath(&rtp, "colors/nord.vim"))
 endif
 "}}
 
-"{{ 配置行尾标识符
-" Need use font: Source Code Pro
-"set list
-"set listchars=tab:→\ ,trail:·,eol:¬,extends:…,precedes:…
-" 高亮行尾空格和中间 tab
-"highlight RedundantSpaces ctermbg=red guibg=red
-"match RedundantSpaces /\s\+$\|\t/
-"}}
-
 "{{ 通用配置
 set nocompatible
 set ai                                  "自动缩进
@@ -89,6 +80,27 @@ let mapleader = ','
 nnoremap <C-l> gt
 nnoremap <C-h> gT
 "}} 快捷键配置结束
+
+"{{ 配置行尾标识符
+" Need use font: Source Code Pro
+let g:hi_list=0
+func! HiList()
+    if g:hi_list==0
+        let g:hi_list=1
+        " 高亮行尾空格和中间 tab
+        "highlight RedundantSpaces ctermbg=red guibg=red
+        "match RedundantSpaces /\s\+$\|\t/
+        set list listchars=tab:→\ ,trail:·,eol:¬,extends:…,precedes:…
+    else
+        let g:hi_list=0
+        "hi clear RedundantSpaces
+        set nolist
+    endif
+endfunc
+
+noremap <leader>h :call HiList()<cr>
+"}}
+
 
 "{{ 插件配置
 
@@ -133,11 +145,11 @@ function! s:gen_tags_find(cmd, keyword) abort
     endif
 endfunction
 
-noremap <leader>c :call <SID>gen_tags_find('c', "<C-R><C-W>")<CR>
-noremap <leader>f :call <SID>gen_tags_find('f', "<C-R><C-F>")<CR>
-noremap <leader>g :call <SID>gen_tags_find('g', "<C-R><C-W>")<CR>
-noremap <leader>i :call <SID>gen_tags_find('i', "<C-R><C-F>")<CR>
-noremap <leader>s :call <SID>gen_tags_find('s', "<C-R><C-W>")<CR>
+noremap <leader>c :call <SID>gen_tags_find('c', "<C-R><C-W>")<cr>
+noremap <leader>f :call <SID>gen_tags_find('f', "<C-R><C-F>")<cr>
+noremap <leader>g :call <SID>gen_tags_find('g', "<C-R><C-W>")<cr>
+noremap <leader>i :call <SID>gen_tags_find('i', "<C-R><C-F>")<cr>
+noremap <leader>s :call <SID>gen_tags_find('s', "<C-R><C-W>")<cr>
 map <leader>q :ccl<cr>
 
 " gtags
