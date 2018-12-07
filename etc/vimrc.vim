@@ -101,6 +101,20 @@ endfunc
 noremap <leader>h :call HiList()<cr>
 "}}
 
+"{{ 查找工程目录
+function! SearchRoot()
+  let l:scm_list = ['.svn', '.git']
+  for l:item in l:scm_list
+    let l:dirs = finddir(l:item, '.;', -1)
+    if !empty(l:dirs)
+      return fnamemodify(l:dirs[-1], ':h')
+    endif
+  endfor
+  return getcwd()
+endfunction
+let g:root_dir = SearchRoot()
+autocmd BufEnter * exe ':cd '.g:root_dir
+"}}
 
 "{{ 插件配置
 
@@ -113,7 +127,8 @@ let g:loaded_gentags#ctags = 1
 let g:gen_tags#gtags_auto_gen = 1
 " disable map
 let g:gen_tags#gtags_default_map = 0
-let g:gen_tags#root_reverse = 1
+" set working dir
+let g:gen_tags#root_path = g:root_dir
 " qucick for gtags
 if v:version >= 800
     set cscopequickfix=s+,c+,d+,i+,t+,e+,g+,f+,a+
@@ -191,9 +206,6 @@ let g:NERDTreeDirArrowCollapsible = '-'
 "}
 
 "grepper{
-" 查找工程目录
-let g:root_dir = gen_tags#find_project_root()
-autocmd BufEnter * exe ':cd '.g:root_dir
 nmap gs <plug>(GrepperOperator)
 xmap gs <plug>(GrepperOperator)
 let g:grepper = {}
@@ -212,13 +224,12 @@ let g:qfenter_keymap.topen = ['t']
 let g:Lf_ShortcutF = '<c-p>'
 noremap <c-m> :LeaderfMru<cr>
 noremap <c-n> :LeaderfFunction<cr>
-let g:Lf_WorkingDirectoryMode = 'c'
+let g:Lf_WorkingDirectory = g:root_dir
 let g:Lf_MruMaxFiles = 64
 let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
-let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
 let g:Lf_WindowHeight = 0.30
 let g:Lf_CacheDirectory = expand('~/.vim/cache')
-let g:Lf_ShowRelativePath = 0
+let g:Lf_ShowRelativePath = 1
 let g:Lf_HideHelp = 1
 let g:Lf_StlColorscheme = 'powerline'
 let g:Lf_UseCache = 0
