@@ -103,11 +103,11 @@ noremap <leader>h :call HiList()<cr>
 
 "{{ 查找工程目录
 function! SearchRoot()
-  let l:scm_list = ['.svn', '.git']
+  let l:scm_list = ['.root', '.svn', '.git']
   for l:item in l:scm_list
     let l:dirs = finddir(l:item, '.;', -1)
     if !empty(l:dirs)
-      return fnamemodify(l:dirs[-1], ':h')
+      return fnamemodify(l:dirs[-1].'/../', ':p:h')
     endif
   endfor
   return getcwd()
