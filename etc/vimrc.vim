@@ -8,10 +8,9 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree'                        " 目录树
 Plug 'jsfaint/gen_tags.vim'                       " 自动生成 tags
-Plug 'mhinz/vim-grepper'                          " 文件内容搜索
 Plug 'yssl/QFEnter'                               " quick-fix 窗口快捷键
 Plug 'tpope/vim-fugitive'                         " git 操作
-Plug 'Yggdroot/LeaderF'                           " 文件列表和函数列表
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' } " Fuzzy search. 文件列表，函数列表，Mru文件列表，rg grep
 Plug 'skywind3000/vim-preview'                    " 预览代码
 
 Plug 'vim-airline/vim-airline'                    " 状态栏
@@ -165,7 +164,6 @@ noremap <leader>f :call <SID>gen_tags_find('f', "<C-R><C-F>")<cr>
 noremap <leader>g :call <SID>gen_tags_find('g', "<C-R><C-W>")<cr>
 noremap <leader>i :call <SID>gen_tags_find('i', "<C-R><C-F>")<cr>
 noremap <leader>s :call <SID>gen_tags_find('s', "<C-R><C-W>")<cr>
-map <leader>q :ccl<cr>
 
 " gtags
 let $GTAGSLABEL = 'native-pygments'
@@ -205,14 +203,6 @@ let g:NERDTreeDirArrowExpandable = '+'
 let g:NERDTreeDirArrowCollapsible = '-'
 "}
 
-"grepper{
-nmap gs <plug>(GrepperOperator)
-xmap gs <plug>(GrepperOperator)
-let g:grepper = {}
-let g:grepper.ag = {}
-let g:grepper.ag.grepprg = 'ag --vimgrep $* '.g:root_dir
-"}
-
 "QFEnter{
 let g:qfenter_keymap = {}
 let g:qfenter_keymap.vopen = ['<C-v>']
@@ -233,6 +223,28 @@ let g:Lf_ShowRelativePath = 1
 let g:Lf_HideHelp = 1
 let g:Lf_StlColorscheme = 'powerline'
 let g:Lf_UseCache = 0
+" 搜索选中的字符串，对结果按 i 支持二次过滤
+xnoremap gs :<C-U><C-R>=printf("Leaderf! rg -F --nowrap --stayOpen -e %s ", leaderf#Rg#visual())<cr><cr>
+
+function! ClosePluginWindow()
+    " Close quickfix
+    cclose
+
+    " Close Leaderf Buffer
+    redir => message
+        silent execute "ls!"
+    redir END
+    let l:buflist = split(message, '\n')
+    for l:one in l:buflist
+        let l:items = split(l:one, '"')
+	if match(l:items[0], "u%a-") >= 0
+	    let l:bufid = matchstr(l:items[0], '\d\+')
+	    exe 'bd! '.l:bufid
+	endif
+    endfor
+endfunction
+" 关闭插件窗口
+map <C-C><C-C> :call ClosePluginWindow()<cr>
 "}
 
 "NCM2{
