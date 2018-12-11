@@ -1,0 +1,24 @@
+#!/bin/sh
+
+if [ -z $1 ]
+then
+    date +"%Y-%m-%d %H:%M:%S"
+    exit 0
+fi
+
+timestamp=$(echo "$1" | grep -P '^\d+$' -o)
+if [ -z "$timestamp" ]
+then
+    timestr=$(echo "$1" "$2" | grep -P '^\d+[-/]\d+[-/]\d+ \d+:\d+:\d+$' -o)
+    if [ -z "$timestr" ]
+    then
+        echo "Time format error."
+        echo "Need timestamp or %Y-%m-%d %H:%M:%S"
+        exit 1
+    else
+        date +%s -d "$timestr"
+    fi
+else
+    date -d @"$timestamp" +"%Y-%m-%d %H:%M:%S"
+fi
+
