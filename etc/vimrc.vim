@@ -25,6 +25,7 @@ Plug 'roxma/nvim-yarp'                            " for ncm2
 Plug 'ncm2/ncm2'                                  " 自动补全
 Plug 'ncm2/ncm2-bufword'                          " ncm2
 Plug 'ncm2/ncm2-path'                             " ncm2
+
 call plug#end()
 
 "{{ 主题
@@ -224,7 +225,7 @@ let g:Lf_HideHelp = 1
 let g:Lf_StlColorscheme = 'powerline'
 let g:Lf_UseCache = 0
 " 搜索选中的字符串，对结果按 i 支持二次过滤
-xnoremap gs :<C-U><C-R>=printf("Leaderf! rg -F --nowrap --stayOpen -e %s ", leaderf#Rg#visual())<cr><cr>
+xnoremap gs :<C-U><C-R>=printf("Leaderf! rg -F --type-add 'decl:*.decl' -t decl -t c -t py -t lua --nowrap --stayOpen -e %s ", leaderf#Rg#visual())<cr><cr>
 
 function! ClosePluginWindow()
     " Close quickfix
@@ -237,7 +238,7 @@ function! ClosePluginWindow()
     let l:buflist = split(message, '\n')
     for l:one in l:buflist
         let l:items = split(l:one, '"')
-	if match(l:items[0], "u%a-") >= 0
+	if match(l:items[0], "u*a-") >= 0
 	    let l:bufid = matchstr(l:items[0], '\d\+')
 	    exe 'bd! '.l:bufid
 	endif
