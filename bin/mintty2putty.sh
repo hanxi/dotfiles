@@ -3,7 +3,7 @@
 transline()
 {
     color=$(echo $1 | cut -d '=' -f 2)
-    echo '"Colour'$2'"="'$color'"'
+    echo '"Colour'$2'"="'$color'"' | awk -F'"' '{print $2"\\"$4"\\"}'
 }
 cat $1 | while read line
 do
