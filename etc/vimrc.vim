@@ -13,14 +13,14 @@ Plug 'tpope/vim-fugitive'                         " git 操作
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' } " Fuzzy search. 文件列表，函数列表，Mru文件列表，rg grep
 Plug 'skywind3000/vim-preview'                    " 预览代码
 
+Plug 'sonph/onehalf', {'rtp': 'vim/'}             " 颜色主题 onehalf
 Plug 'vim-airline/vim-airline'                    " 状态栏
 Plug 'vim-airline/vim-airline-themes'             " 状态栏主题
 Plug 'edkolev/tmuxline.vim'                       " 生成 tmuxline color
 Plug 'edkolev/promptline.vim'                     " 生成 bash path color
-Plug 'arcticicestudio/nord-vim'                   " 颜色主题
-Plug 'plasticboy/vim-markdown'
+Plug 'plasticboy/vim-markdown'                    " markdown 语法高亮
 
-Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'roxma/vim-hug-neovim-rpc'                   " for vim8 use ncm2
 Plug 'roxma/nvim-yarp'                            " for ncm2
 Plug 'ncm2/ncm2'                                  " 自动补全
 Plug 'ncm2/ncm2-bufword'                          " ncm2
@@ -29,13 +29,14 @@ Plug 'ncm2/ncm2-path'                             " ncm2
 call plug#end()
 
 "{{ 主题
-set background=dark
 syn on
 syn enable
-let g:nord_italic = 1
-let g:nord_cursor_line_number_background = 1
-if !empty(globpath(&rtp, "colors/nord.vim"))
-    colorscheme nord
+set t_Co=256
+
+" onehalf
+if !empty(globpath(&rtp, "colors/onehalfdark.vim"))
+    colorscheme onehalfdark
+    let g:airline_theme='onehalfdark'
 endif
 "}}
 
@@ -150,10 +151,10 @@ function! s:gen_tags_find(cmd, keyword) abort
 
     if len(getqflist()) > 1
         " If the buffer that cscope jumped to is not same as current file, close the buffer
-	if l:cur_buf != @%
+        if l:cur_buf != @%
             " Go back to where the command was issued
             execute "normal! `Y"
-	    " delete previous buffer.
+            " delete previous buffer.
             bdelete #
         endif
         copen
@@ -169,21 +170,6 @@ noremap <leader>s :call <SID>gen_tags_find('s', "<C-R><C-W>")<cr>
 " gtags
 let $GTAGSLABEL = 'native-pygments'
 let $GTAGSCONF = expand('~/.local/etc/gtags.conf')
-"}
-
-"airline{ 状态栏的配置
-set laststatus=2
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#tmuxline#enabled = 0
-let g:airline#extensions#promptline#enabled = 0
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-let g:airline_symbols.maxlinenr = ''
-let g:airline_symbols.linenr = ''
 "}
 
 "nerdtree{ 目录树配置
@@ -238,10 +224,10 @@ function! ClosePluginWindow()
     let l:buflist = split(message, '\n')
     for l:one in l:buflist
         let l:items = split(l:one, '"')
-	if match(l:items[0], "u*a-") >= 0
-	    let l:bufid = matchstr(l:items[0], '\d\+')
-	    exe 'bd! '.l:bufid
-	endif
+    if match(l:items[0], "u*a-") >= 0
+        let l:bufid = matchstr(l:items[0], '\d\+')
+        exe 'bd! '.l:bufid
+    endif
     endfor
 endfunction
 " 关闭插件窗口
@@ -269,7 +255,7 @@ inoremap <m-n> <c-\><c-o>:PreviewSignature!<cr>
 "}
 
 "promptline{
-":PromptlineSnapshot ~/.shell_prompt.sh airline
+":PromptlineSnapshot! ~/.local/etc/shell_prompt.sh airline
 if !empty(globpath(&rtp, "promptline.vim"))
     let g:promptline_symbols = {
                 \ 'truncation'     : '…'
@@ -285,7 +271,7 @@ endif
 
 "tmuxline{
 ":Tmuxline airline
-":TmuxlineSnapshot ~/.tmux/tmuxline.conf
+":TmuxlineSnapshot! ~/.local/etc/tmuxline.conf
 let g:tmuxline_preset = {
             \'a'    : '#S',
             \'win'  : '#I #W',
