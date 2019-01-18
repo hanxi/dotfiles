@@ -13,7 +13,7 @@ Plug 'tpope/vim-fugitive'                         " git 操作
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' } " Fuzzy search. 文件列表，函数列表，Mru文件列表，rg grep
 Plug 'skywind3000/vim-preview'                    " 预览代码
 
-Plug 'sonph/onehalf', {'rtp': 'vim/'}             " 颜色主题 onehalf
+Plug 'KeitaNakamura/neodark.vim'                  " 颜色主题 neodark
 Plug 'vim-airline/vim-airline'                    " 状态栏
 Plug 'vim-airline/vim-airline-themes'             " 状态栏主题
 Plug 'edkolev/tmuxline.vim'                       " 生成 tmuxline color
@@ -45,12 +45,11 @@ if (has("termguicolors"))
     set termguicolors
 endif
 
-" onehalf
-if !empty(globpath(&rtp, "colors/onehalfdark.vim"))
-    colorscheme onehalfdark
-    let g:airline_theme='onehalfdark'
+if !empty(globpath(&rtp, "colors/neodark.vim"))
+    let g:neodark#solid_vertsplit = 1
+    let g:airline_theme='papercolor'
+    colorscheme neodark
 endif
-
 "}}
 
 "{{ 通用配置
@@ -269,12 +268,16 @@ noremap <m-n> :PreviewSignature!<cr>
 inoremap <m-n> <c-\><c-o>:PreviewSignature!<cr>
 "}
 
+"airline{
+let g:airline_powerline_fonts = 1
+"}
+
 "promptline{
 ":PromptlineSnapshot! ~/.local/etc/shell_prompt.sh airline
+let g:promptline_symbols = {
+	\ 'truncation'     : '…'
+	\ }
 if !empty(globpath(&rtp, "promptline.vim"))
-    let g:promptline_symbols = {
-                \ 'truncation'     : '…'
-                \ }
     let g:promptline_preset = {
                 \ 'a' : [ promptline#slices#user() ],
                 \ 'c' : [ promptline#slices#cwd() ],
