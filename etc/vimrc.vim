@@ -306,6 +306,14 @@ let g:tmuxline_preset = {
 let g:vim_markdown_folding_disabled = 1
 "}
 
+"neovim clipborad{
+let g:clipboard = {
+            \'copy': { '+': 'lemonade copy', '*': 'lemonade copy' },
+            \'paste': { '+': 'lemonade paste', '*': 'lemonade paste' },
+            \'name': 'lemonade',
+            \}
+"}
+
 "}} 插件配置结束
 
 "{ 保存时自动删除行尾空格
