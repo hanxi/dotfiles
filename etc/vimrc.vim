@@ -19,6 +19,7 @@ Plug 'vim-airline/vim-airline-themes'             " 状态栏主题
 Plug 'edkolev/tmuxline.vim'                       " 生成 tmuxline color
 Plug 'edkolev/promptline.vim'                     " 生成 bash path color
 Plug 'plasticboy/vim-markdown'                    " markdown 语法高亮
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }} " markdown 预览
 
 Plug 'roxma/vim-hug-neovim-rpc'                   " for vim8 use ncm2
 Plug 'roxma/nvim-yarp'                            " for ncm2
@@ -59,8 +60,8 @@ set si
 set bs=2                                "在insert模式下用退格键删除
 set showmatch                           "代码匹配
 "设置tab和缩进空格数
-"set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
-set tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
+set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+"set tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
 set cursorline                          "为光标所在行加下划线
 set cursorcolumn                        "为光标所在行加下划线
 set number                              "显示行号
@@ -275,8 +276,8 @@ let g:airline_powerline_fonts = 1
 "promptline{
 ":PromptlineSnapshot! ~/.local/etc/shell_prompt.sh airline
 let g:promptline_symbols = {
-	\ 'truncation'     : '…'
-	\ }
+        \ 'truncation'     : '…'
+        \ }
 if !empty(globpath(&rtp, "promptline.vim"))
     let g:promptline_preset = {
                 \ 'a' : [ promptline#slices#user() ],
@@ -304,6 +305,18 @@ let g:tmuxline_preset = {
 
 "{ vim-markdown
 let g:vim_markdown_folding_disabled = 1
+"}
+
+"{markdown-preview
+let g:mkdp_open_to_the_world = 1
+let g:mkdp_open_ip = '127.0.0.1'
+let g:mkdp_port = 8080
+function! g:Open_browser(url)
+    silent exe '!lemonade open 'a:url
+endfunction
+
+" 设置调用的函数的名字
+let g:mkdp_browserfunc = 'g:Open_browser'
 "}
 
 "neovim clipborad{
