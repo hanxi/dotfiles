@@ -271,6 +271,9 @@ inoremap <m-n> <c-\><c-o>:PreviewSignature!<cr>
 
 "airline{
 let g:airline_powerline_fonts = 1
+if !empty(globpath(&rtp, "vim-airline.vim"))
+    let g:airline#extensions#tabline#enabled = 1
+endif
 "}
 
 "promptline{
