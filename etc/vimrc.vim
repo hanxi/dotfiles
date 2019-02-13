@@ -49,6 +49,8 @@ endif
 if !empty(globpath(&rtp, "colors/neodark.vim"))
     let g:neodark#solid_vertsplit = 1
     let g:airline_theme='papercolor'
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum" " fixed color for $TERM=screen-256color
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
     colorscheme neodark
 endif
 "}}
@@ -271,9 +273,10 @@ inoremap <m-n> <c-\><c-o>:PreviewSignature!<cr>
 
 "airline{
 let g:airline_powerline_fonts = 1
-if !empty(globpath(&rtp, "vim-airline.vim"))
-    let g:airline#extensions#tabline#enabled = 1
-endif
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#show_tab_nr = 0
+let g:airline#extensions#tabline#show_close_button = 0
 "}
 
 "promptline{
