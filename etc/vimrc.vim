@@ -185,6 +185,7 @@ noremap <leader>s :call <SID>gen_tags_find('s', "<C-R><C-W>")<cr>
 " gtags
 let $GTAGSLABEL = 'native-pygments'
 let $GTAGSCONF = expand('~/.local/etc/gtags.conf')
+"let g:gen_tags#verbose = 1
 "}
 
 "nerdtree{ 目录树配置
@@ -193,7 +194,7 @@ function! ToggleNERDTree()
 endfunction
 map <leader>t :call ToggleNERDTree()<cr>
 let NERDTreeIgnore = ['\~$', '\$.*$', '\.swp$', '\.pyc$', '#.\{-\}#$']
-let s:ignore = ['.xls', '.xlsx', '.mobi', '.mp4', '.mp3']
+let s:ignore = ['.pb', '.xls', '.xlsx', '.mobi', '.mp4', '.mp3']
 
 for s:extname in s:ignore
     let NERDTreeIgnore += [escape(s:extname, '.~$')]
@@ -225,8 +226,13 @@ let g:Lf_ShowRelativePath = 1
 let g:Lf_HideHelp = 1
 let g:Lf_StlColorscheme = 'powerline'
 let g:Lf_UseCache = 0
+let g:Lf_UseVersionControlTool = 0
 " 搜索选中的字符串，对结果按 i 支持二次过滤
-xnoremap gs :<C-U><C-R>=printf("Leaderf! rg -F --type-add 'decl:*.decl' -t decl -t c -t py -t lua --nowrap --stayOpen -e %s ", leaderf#Rg#visual())<cr><cr>
+let g:Lf_RgConfig = [
+    \ "--max-columns=150",
+    \ "--glob=!git/*"
+    \ ]
+xnoremap gs :<C-U><C-R>=printf("Leaderf! rg -F -t c -t py -t lua --nowrap --stayOpen -e %s ", leaderf#Rg#visual())<cr><cr>
 
 function! ClosePluginWindow()
     " Close quickfix
