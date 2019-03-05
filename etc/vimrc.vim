@@ -230,9 +230,10 @@ let g:Lf_UseVersionControlTool = 0
 " 搜索选中的字符串，对结果按 i 支持二次过滤
 let g:Lf_RgConfig = [
     \ "--max-columns=150",
+    \ "--type-add proto:*.proto",
     \ "--glob=!git/*"
     \ ]
-xnoremap gs :<C-U><C-R>=printf("Leaderf! rg -F -t c -t py -t lua --nowrap --stayOpen -e %s ", leaderf#Rg#visual())<cr><cr>
+xnoremap gs :<C-U><C-R>=printf("Leaderf! rg -F -t proto -t c -t py -t lua --nowrap --stayOpen -e %s ", leaderf#Rg#visual())<cr><cr>
 
 function! ClosePluginWindow()
     " Close quickfix
@@ -259,9 +260,7 @@ map <C-C><C-C> :call ClosePluginWindow()<cr>
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " enable ncm2 for all buffers
-if !empty(globpath(&rtp, "ncm2.vim"))
-    autocmd BufEnter * call ncm2#enable_for_buffer()
-endif
+autocmd BufEnter * call ncm2#enable_for_buffer()
 " IMPORTANTE: :help Ncm2PopupOpen for more information
 set completeopt=noinsert,menuone,noselect
 "}
