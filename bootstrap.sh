@@ -1,5 +1,8 @@
 #! /usr/bin/env bash
 
+set -e
+set -x
+
 ETC=~/.local/etc
 BIN=~/.local/bin
 mkdir -p $ETC
@@ -52,6 +55,13 @@ git config --global color.branch auto
 git config --global color.interactive auto
 git config --global core.quotepath false
 
-# install vim plug (may be some bugs)
-vim +PlugInstall +qall
+# install vim plug
+if command -v nvim 2>/dev/null; then
+    nvim +PlugInstall +qall
+else
+    vim_version=`vim --version | head -1`
+    if [[ `echo $vim_version | awk -F '[ .]' '{print $5}'` -gt 7 ]]; then
+        vim +PlugInstall +qall
+    fi
+fi
 
