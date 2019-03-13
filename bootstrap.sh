@@ -24,7 +24,7 @@ sys_type=linux_amd64
 rm -f $BIN/lemonade
 ln -s $BIN/lemonade_${sys_type} $BIN/lemonade
 mkdir -p ~/.config
-cp $ETC/lemonade.toml ~/.config/lemonade.toml
+mv $ETC/lemonade.toml ~/.config/lemonade.toml
 
 # source init.sh
 sed -i "\:$ETC/init.sh:d" ~/.bashrc
