@@ -8,11 +8,12 @@ fi
 # yum install bash-completion
 [[ $PS1 && -f /usr/local/share/bash-completion/bash_completion ]] && \
     . /usr/local/share/bash-completion/bash_completion
+[[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
+    . /usr/share/bash-completion/bash_completion
 
 # git completion
-# curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.local/etc/git-completion.bash
-if [ -f "$HOME/.local/etc/git-completion.bash" ]; then
-    . $HOME/.local/etc/git-completion.bash
+if [ -f /etc/bash_completion.d/git ]; then
+    . /etc/bash_completion.d/git
 fi
 
 
