@@ -34,6 +34,8 @@ syn on
 syn enable
 set t_Co=256
 
+"fonts from https://github.com/ryanoasis/nerd-fonts
+
 if (has("nvim"))
     "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -202,8 +204,6 @@ endfor
 
 let NERDTreeRespectWildIgnore = 1
 let g:NERDTreeChDirMode           = 0
-let g:NERDTreeDirArrowExpandable = '+'
-let g:NERDTreeDirArrowCollapsible = '-'
 "}
 
 "QFEnter{
@@ -219,7 +219,7 @@ noremap <c-m> :LeaderfMru<cr>
 noremap <c-n> :LeaderfFunction<cr>
 let g:Lf_WorkingDirectory = g:root_dir
 let g:Lf_MruMaxFiles = 64
-let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
+let g:Lf_StlSeparator = { 'left': "\uE0BC", 'right': "\uE0BE", 'font': '' }
 let g:Lf_WindowHeight = 0.30
 let g:Lf_CacheDirectory = expand('~/.vim/cache')
 let g:Lf_ShowRelativePath = 1
@@ -278,30 +278,43 @@ inoremap <m-n> <c-\><c-o>:PreviewSignature!<cr>
 
 "airline{
 let g:airline_powerline_fonts = 1
+let g:airline_left_sep="\uE0BC"
+let g:airline_right_sep="\uE0BE"
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
 let g:airline#extensions#tabline#show_tab_nr = 0
 let g:airline#extensions#tabline#show_close_button = 0
+let g:airline#extensions#default#layout = [
+      \ [ 'a', 'b', 'c' ],
+      \ [ 'x', 'y', 'z' ]
+      \ ]
 "}
 
 "promptline{
 ":PromptlineSnapshot! ~/.local/etc/shell_prompt.sh airline
 let g:promptline_symbols = {
-        \ 'truncation'     : '…'
-        \ }
+            \ 'left'           : "\uE0BC",
+            \ 'left_alt'       : "\uE0BD",
+            \ 'right'          : "\uE0BE",
+            \ 'right_alt'      : "\uE0BF",
+            \ 'dir_sep'        : " \uE0BD "}
 if !empty(globpath(&rtp, "promptline.vim"))
     let g:promptline_preset = {
                 \ 'a' : [ promptline#slices#user() ],
                 \ 'c' : [ promptline#slices#cwd() ],
-                \ 'y' : [ promptline#slices#vcs_branch() ],
-                \ 'warn' : [ promptline#slices#last_exit_code() ]
-                \ }
+                \ 'y' : [ promptline#slices#vcs_branch() ]}
 endif
 "}
 
 "tmuxline{
 ":Tmuxline airline
 ":TmuxlineSnapshot! ~/.local/etc/tmuxline.conf
+let g:tmuxline_separators = {
+            \ 'left' : "\uE0BC",
+            \ 'left_alt': "\uE0BD",
+            \ 'right' : "\uE0BE",
+            \ 'right_alt' : "\uE0BF"}
+    
 let g:tmuxline_preset = {
             \'a'    : '#S',
             \'win'  : '#I #W',
