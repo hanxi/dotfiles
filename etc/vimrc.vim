@@ -280,6 +280,7 @@ inoremap <m-n> <c-\><c-o>:PreviewSignature!<cr>
 let g:airline_powerline_fonts = 1
 let g:airline_left_sep="\uE0BC"
 let g:airline_right_sep="\uE0BE"
+let g:airline_section_z = airline#section#create(["\uE0A1" . '%{line(".")}' . "\uE0A3" . '%{col(".")}'])
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
 let g:airline#extensions#tabline#show_tab_nr = 0
@@ -297,7 +298,9 @@ let g:promptline_symbols = {
             \ 'left_alt'       : "\uE0BD",
             \ 'right'          : "\uE0BE",
             \ 'right_alt'      : "\uE0BF",
-            \ 'dir_sep'        : " \uE0BD "}
+            \ 'dir_sep'        : " \uE0BD ",
+            \ 'truncation'     : "...",
+            \ 'vcs_branch'     : "\uE0A0 "}
 if !empty(globpath(&rtp, "promptline.vim"))
     let g:promptline_preset = {
                 \ 'a' : [ promptline#slices#user() ],
