@@ -300,7 +300,7 @@ let g:promptline_symbols = {
             \ 'left_alt'      : "\uE0B9",
             \ 'right'           : "\uE0BA",
             \ 'right_alt'       : "\uE0BB",
-            \ 'dir_sep'        : " \uE0BD ",
+            \ 'dir_sep'        : " \uE0BF ",
             \ 'truncation'     : "...",
             \ 'vcs_branch'     : "\uE0A0 "}
 if !empty(globpath(&rtp, "promptline.vim"))
