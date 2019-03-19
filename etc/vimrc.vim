@@ -219,7 +219,7 @@ noremap <c-m> :LeaderfMru<cr>
 noremap <c-n> :LeaderfFunction<cr>
 let g:Lf_WorkingDirectory = g:root_dir
 let g:Lf_MruMaxFiles = 64
-let g:Lf_StlSeparator = { 'left': "\uE0BC", 'right': "\uE0BE", 'font': '' }
+let g:Lf_StlSeparator = { 'left': "\uE0B8", 'right': "\uE0B9", 'font': '' }
 let g:Lf_WindowHeight = 0.30
 let g:Lf_CacheDirectory = expand('~/.vim/cache')
 let g:Lf_ShowRelativePath = 1
@@ -278,10 +278,10 @@ inoremap <m-n> <c-\><c-o>:PreviewSignature!<cr>
 
 "airline{
 let g:airline_powerline_fonts = 1
-let g:airline_left_sep="\uE0BC"
-let g:airline_right_sep="\uE0BE"
-let g:airline_left_alt_sep="\uE0BD"
-let g:airline_right_alt_sep="\uE0BF"
+let g:airline_left_sep="\uE0B8"
+let g:airline_left_alt_sep="\uE0B9"
+let g:airline_right_sep="\uE0BA"
+let g:airline_right_alt_sep="\uE0BB"
 let g:airline_section_z = airline#section#create(["\uE0A1" . '%{line(".")}' . "\uE0A3" . '%{col(".")}'])
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
@@ -296,10 +296,10 @@ let g:airline#extensions#default#layout = [
 "promptline{
 ":PromptlineSnapshot! ~/.local/etc/shell_prompt.sh airline
 let g:promptline_symbols = {
-            \ 'left'           : "\uE0BC",
-            \ 'left_alt'       : "\uE0BD",
-            \ 'right'          : "\uE0BE",
-            \ 'right_alt'      : "\uE0BF",
+            \ 'left'          : "\uE0B8",
+            \ 'left_alt'      : "\uE0B9",
+            \ 'right'           : "\uE0BA",
+            \ 'right_alt'       : "\uE0BB",
             \ 'dir_sep'        : " \uE0BD ",
             \ 'truncation'     : "...",
             \ 'vcs_branch'     : "\uE0A0 "}
@@ -315,10 +315,10 @@ endif
 ":Tmuxline airline
 ":TmuxlineSnapshot! ~/.local/etc/tmuxline.conf
 let g:tmuxline_separators = {
-            \ 'left' : "\uE0BC",
-            \ 'left_alt': "\uE0BD",
-            \ 'right' : "\uE0BE",
-            \ 'right_alt' : "\uE0BF"}
+            \ 'left' : "\uE0B8",
+            \ 'left_alt' : "\uE0B9",
+            \ 'right' : "\uE0BA",
+            \ 'right_alt': "\uE0BB"}
     
 let g:tmuxline_preset = {
             \'a'    : '#S',
