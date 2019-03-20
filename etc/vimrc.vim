@@ -34,6 +34,12 @@ syn on
 syn enable
 set t_Co=256
 
+let g:left_sep="\uE0B4"
+let g:left_alt_sep="\uE0B5"
+let g:right_sep="\uE0B6"
+let g:right_alt_sep="\uE0B7"
+let g:dir_sep="\uE0B5"
+
 "fonts from https://github.com/ryanoasis/nerd-fonts
 
 if (has("nvim"))
@@ -219,7 +225,7 @@ noremap <c-m> :LeaderfMru<cr>
 noremap <c-n> :LeaderfFunction<cr>
 let g:Lf_WorkingDirectory = g:root_dir
 let g:Lf_MruMaxFiles = 64
-let g:Lf_StlSeparator = { 'left': "\uE0B8", 'right': "\uE0B9", 'font': '' }
+let g:Lf_StlSeparator = { 'left': g:left_sep, 'right': g:right_sep, 'font': '' }
 let g:Lf_WindowHeight = 0.30
 let g:Lf_CacheDirectory = expand('~/.vim/cache')
 let g:Lf_ShowRelativePath = 1
@@ -278,10 +284,10 @@ inoremap <m-n> <c-\><c-o>:PreviewSignature!<cr>
 
 "airline{
 let g:airline_powerline_fonts = 1
-let g:airline_left_sep="\uE0B8"
-let g:airline_left_alt_sep="\uE0B9"
-let g:airline_right_sep="\uE0BA"
-let g:airline_right_alt_sep="\uE0BB"
+let g:airline_left_sep=g:left_sep
+let g:airline_left_alt_sep=g:left_alt_sep
+let g:airline_right_sep=g:right_sep
+let g:airline_right_alt_sep=g:right_alt_sep
 let g:airline_section_z = airline#section#create(["\uE0A1" . '%{line(".")}' . "\uE0A3" . '%{col(".")}'])
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
@@ -296,13 +302,13 @@ let g:airline#extensions#default#layout = [
 "promptline{
 ":PromptlineSnapshot! ~/.local/etc/shell_prompt.sh airline
 let g:promptline_symbols = {
-            \ 'left'          : "\uE0B8",
-            \ 'left_alt'      : "\uE0B9",
-            \ 'right'           : "\uE0BA",
-            \ 'right_alt'       : "\uE0BB",
-            \ 'dir_sep'        : " \uE0BF ",
-            \ 'truncation'     : "...",
-            \ 'vcs_branch'     : "\uE0A0 "}
+            \ 'left'          : g:left_sep,
+            \ 'left_alt'      : g:left_alt_sep,
+            \ 'right'         : g:right_sep,
+            \ 'right_alt'     : g:right_alt_sep,
+            \ 'dir_sep'       : " ".g:dir_sep." ",
+            \ 'truncation'    : "...",
+            \ 'vcs_branch'    : "\uE0A0 "}
 if !empty(globpath(&rtp, "promptline.vim"))
     let g:promptline_preset = {
                 \ 'a' : [ promptline#slices#user() ],
@@ -315,10 +321,10 @@ endif
 ":Tmuxline airline
 ":TmuxlineSnapshot! ~/.local/etc/tmuxline.conf
 let g:tmuxline_separators = {
-            \ 'left' : "\uE0B8",
-            \ 'left_alt' : "\uE0B9",
-            \ 'right' : "\uE0BA",
-            \ 'right_alt': "\uE0BB"}
+            \ 'left'     : g:left_sep,
+            \ 'left_alt' : g:left_alt_sep,
+            \ 'right'    : g:right_sep,
+            \ 'right_alt': g:right_alt_sep}
     
 let g:tmuxline_preset = {
             \'a'    : '#S',
