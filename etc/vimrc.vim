@@ -27,6 +27,9 @@ Plug 'ncm2/ncm2'                                  " 自动补全
 Plug 'ncm2/ncm2-bufword'                          " ncm2
 Plug 'ncm2/ncm2-path'                             " ncm2
 
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'thosakwe/vim-flutter'
+
 call plug#end()
 
 "{{ 主题
@@ -360,6 +363,11 @@ let g:clipboard = {
             \'paste': { '+': 'lemonade paste', '*': 'lemonade paste' },
             \'name': 'lemonade',
             \}
+"}
+
+"dart {
+let dart_style_guide = 2
+let dart_format_on_save = 1
 "}
 
 "}} 插件配置结束
