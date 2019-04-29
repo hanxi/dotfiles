@@ -7,7 +7,6 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree'                        " 目录树
-Plug 'jsfaint/gen_tags.vim'                       " 自动生成 tags
 Plug 'yssl/QFEnter'                               " quick-fix 窗口快捷键
 Plug 'tpope/vim-fugitive'                         " git 操作
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' } " Fuzzy search. 文件列表，函数列表，Mru文件列表，rg grep
@@ -27,8 +26,9 @@ Plug 'ncm2/ncm2'                                  " 自动补全
 Plug 'ncm2/ncm2-bufword'                          " ncm2
 Plug 'ncm2/ncm2-path'                             " ncm2
 
-Plug 'dart-lang/dart-vim-plugin'
-Plug 'thosakwe/vim-flutter'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'ncm2/ncm2-vim-lsp'
 
 call plug#end()
 
@@ -145,60 +145,6 @@ autocmd BufEnter * exe ':cd '.g:root_dir
 
 "{{ 插件配置
 
-"gen_tags{
-" 将自动生成的 tags 文件全部放入 ~/.cache/tags_dir 目录中，避免污染工程目录
-let g:gen_tags#use_cache_dir = 1
-" disable ctags
-let g:loaded_gentags#ctags = 1
-" auto gtags
-let g:gen_tags#gtags_auto_gen = 1
-" disable map
-let g:gen_tags#gtags_default_map = 0
-" set working dir
-let g:gen_tags#root_path = g:root_dir
-" qucick for gtags
-if v:version >= 800
-    set cscopequickfix=s+,c+,d+,i+,t+,e+,g+,f+,a+
-else
-    set cscopequickfix=s+,c+,d+,i+,t+,e+,g+,f+
-endif
-
-function! s:gen_tags_find(cmd, keyword) abort
-    " Mark this position
-    execute "normal! mY"
-    " Close any open quickfix windows
-    cclose
-    " Clear existing quickfix list
-    cal setqflist([])
-
-    let l:cur_buf=@%
-    let l:cmd = 'cs find ' . a:cmd . ' ' . a:keyword
-    silent! keepjumps execute l:cmd
-
-    if len(getqflist()) > 1
-        " If the buffer that cscope jumped to is not same as current file, close the buffer
-        if l:cur_buf != @%
-            " Go back to where the command was issued
-            execute "normal! `Y"
-            " delete previous buffer.
-            bdelete #
-        endif
-        copen
-    endif
-endfunction
-
-noremap <leader>c :call <SID>gen_tags_find('c', "<C-R><C-W>")<cr>
-noremap <leader>f :call <SID>gen_tags_find('f', "<C-R><C-F>")<cr>
-noremap <leader>g :call <SID>gen_tags_find('g', "<C-R><C-W>")<cr>
-noremap <leader>i :call <SID>gen_tags_find('i', "<C-R><C-F>")<cr>
-noremap <leader>s :call <SID>gen_tags_find('s', "<C-R><C-W>")<cr>
-
-" gtags
-let $GTAGSLABEL = 'native-pygments'
-let $GTAGSCONF = expand('~/.local/etc/gtags.conf')
-"let g:gen_tags#verbose = 1
-"}
-
 "nerdtree{ 目录树配置
 function! ToggleNERDTree()
     silent exe ':NERDTree '.expand('%:p:h')
@@ -243,6 +189,19 @@ let g:Lf_RgConfig = [
     \ "--glob=!git/*"
     \ ]
 xnoremap gs :<C-U><C-R>=printf("Leaderf! rg -F -t proto -t c -t py -t lua --nowrap --stayOpen -e %s ", leaderf#Rg#visual())<cr><cr>
+
+" gtags
+let g:Lf_GtagsAutoGenerate = 1
+let g:Lf_Gtagslabel = 'native-pygments'
+let g:Lf_Gtagsconf = expand('~/.local/etc/gtags.conf')
+" definition 
+noremap <leader>d :<C-U><C-R>=printf("Leaderf! gtags -d %s", expand("<cword>"))<cr><cr>
+" reference 
+noremap <leader>r :<C-U><C-R>=printf("Leaderf! gtags -r %s", expand("<cword>"))<cr><cr>
+" symbol 
+noremap <leader>s :<C-U><C-R>=printf("Leaderf! gtags -s %s", expand("<cword>"))<cr><cr>
+" grep
+noremap <leader>g :<C-U><C-R>=printf("Leaderf! gtags -g %s", expand("<cword>"))<cr><cr>
 
 function! ClosePluginWindow()
     " Close quickfix
@@ -347,8 +306,8 @@ let g:vim_markdown_folding_disabled = 1
 
 "{markdown-preview
 let g:mkdp_open_to_the_world = 1
-let g:mkdp_open_ip = '127.0.0.1'
-let g:mkdp_port = 8080
+let g:mkdp_open_ip = '192.168.29.251'
+let g:mkdp_port = 6060
 function! g:Open_browser(url)
     silent exe '!lemonade open 'a:url
 endfunction
@@ -385,30 +344,5 @@ command! W call DeleteTrailingWS()
 
 "{ 记住上次编辑的位置
 au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
-"}
-
-"{ 热更服务器
-function! HotFixServer(server)
-    let s:server = tolower(a:server)
-    if s:server == ''
-        let s:server = 'gamed'
-    endif
-    if expand('%:e') == 'c'
-        let s:autoupdatefile = g:root_dir.'/etc/autoupdate_'.s:server
-        if filereadable(s:autoupdatefile)
-            let l:curfile = substitute(expand('%:p'), g:root_dir, "", "")
-            let l:context = l:curfile
-            silent exe '!echo -e 'l:context' > 's:autoupdatefile
-            :redraw!
-            :echo "Updated ".s:autoupdatefile
-        else
-            :echo "Error! Hot need create ".s:autoupdatefile." file."
-        endif
-    else
-        :echo "Error! Hot only support *.c file."
-    endif
-endfunction
-" :H [gamed/netd...] 命令自动热更当前编辑的文件，默认gamed
-command! -nargs=? H call HotFixServer(<q-args>)
 "}
 
