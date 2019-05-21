@@ -26,10 +26,6 @@ Plug 'ncm2/ncm2'                                  " 自动补全
 Plug 'ncm2/ncm2-bufword'                          " ncm2
 Plug 'ncm2/ncm2-path'                             " ncm2
 
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'ncm2/ncm2-vim-lsp'
-
 call plug#end()
 
 "{{ 主题
@@ -74,7 +70,6 @@ set bs=2                                "在insert模式下用退格键删除
 set showmatch                           "代码匹配
 "设置tab和缩进空格数
 set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
-"set tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
 set cursorline                          "为光标所在行加下划线
 set cursorcolumn                        "为光标所在行加下划线
 set number                              "显示行号
@@ -99,6 +94,11 @@ set wildignore+=*.exe                   " Windows
 set tags=./.tags;,.tags
 set ttimeout
 set ttimeoutlen=100
+set hidden
+set nobackup
+set nowritebackup
+set updatetime=300
+set shortmess+=c
 "}} 通用配置结束
 
 "{{ 快捷键配置
@@ -186,7 +186,8 @@ let g:Lf_UseVersionControlTool = 0
 let g:Lf_RgConfig = [
     \ "--max-columns=150",
     \ "--type-add proto:*.proto",
-    \ "--glob=!git/*"
+    \ "--glob=!git/*",
+    \ "--follow --no-ignore"
     \ ]
 xnoremap gs :<C-U><C-R>=printf("Leaderf! rg -F -t proto -t c -t py -t lua --nowrap --stayOpen -e %s ", leaderf#Rg#visual())<cr><cr>
 
@@ -306,7 +307,7 @@ let g:vim_markdown_folding_disabled = 1
 
 "{markdown-preview
 let g:mkdp_open_to_the_world = 1
-let g:mkdp_open_ip = '192.168.29.251'
+let g:mkdp_open_ip = 'localhost'
 let g:mkdp_port = 6060
 function! g:Open_browser(url)
     silent exe '!lemonade open 'a:url
@@ -322,11 +323,6 @@ let g:clipboard = {
             \'paste': { '+': 'lemonade paste', '*': 'lemonade paste' },
             \'name': 'lemonade',
             \}
-"}
-
-"dart {
-let dart_style_guide = 2
-let dart_format_on_save = 1
 "}
 
 "}} 插件配置结束
