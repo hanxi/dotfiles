@@ -319,7 +319,7 @@ let g:mkdp_browserfunc = 'g:Open_browser'
 
 "neovim clipborad{
 let g:clipboard = {
-            \'copy': { '+': 'oclip', '*': 'oclip' },
+            \'copy': { '+': 'oclip -i', '*': 'oclip -i' },
             \'paste': { '+': 'oclip -o', '*': 'oclip -o' },
             \'name': 'oclip',
             \}
