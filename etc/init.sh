@@ -40,7 +40,6 @@ if [ -n "$PATH" ]; then
 fi
 export PATH
 
-
 # 如果是 bash/zsh 的话，source 一下 ~/.local/etc/function.sh
 if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
     # run script for interactive mode of bash/zsh

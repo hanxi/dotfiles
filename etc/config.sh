@@ -27,8 +27,8 @@ export TERM=screen-256color
 export TERM_ITALICS=true
 
 # for http proxy
-export http_proxy=http://192.168.2.2:8081/
-#export http_proxy=
+#export http_proxy=http://192.168.29.221:5719/
+export http_proxy=
 export https_proxy=$http_proxy
 export ftp_proxy=$http_proxy
 export rsync_proxy=$http_proxy
@@ -41,3 +41,11 @@ export HISTTIMEFORMAT="%d/%m/%y %T "
 
 # Alias for tree view of commit history.
 git config --global alias.tree "log --all --graph --decorate=short --color --format=format:'%C(bold blue)%h%C(reset) %C(auto)%d%C(reset)\n         %C(blink yellow)[%cr]%C(reset)  %x09%C(white)%an: %s %C(reset)'"
+
+# set pwd for tmux
+function my_cd() {
+    \cd $1
+    $([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")
+}
+alias cd=my_cd
+
