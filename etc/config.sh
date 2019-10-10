@@ -43,9 +43,13 @@ export HISTTIMEFORMAT="%d/%m/%y %T "
 git config --global alias.tree "log --all --graph --decorate=short --color --format=format:'%C(bold blue)%h%C(reset) %C(auto)%d%C(reset)\n         %C(blink yellow)[%cr]%C(reset)  %x09%C(white)%an: %s %C(reset)'"
 
 # set pwd for tmux
-function my_cd() {
-    \cd $1
+function set_tmux_pwd() {
     $([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")
 }
+function my_cd() {
+    \cd $1
+    set_tmux_pwd
+}
+set_tmux_pwd
 alias cd=my_cd
 
