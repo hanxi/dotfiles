@@ -23,7 +23,7 @@ export LD_LIBRARY_PATH=$HOME/.local/lib:$LD_LIBRARY_PATH
 export PKG_CONFIG_PATH=$HOME/.local/lib/pkgconfig:$PKG_CONFIG_PATH
 
 # for tmux
-export TERM=screen-256color
+export TERM=xterm-256color
 export TERM_ITALICS=true
 
 # for http proxy
