@@ -44,7 +44,8 @@ git config --global alias.tree "log --all --graph --decorate=short --color --for
 
 # set pwd for tmux
 function set_tmux_pwd() {
-    $([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")
+    [ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD"
+    return 0
 }
 function my_cd() {
     \cd $1
