@@ -21,13 +21,8 @@ cp -rf etc/* $ETC/
 cp -rf bin/* $BIN/
 cp bootstrap.sh $BIN/
 
-# setup lemonade
-# TODO check sys_type
-sys_type=linux_amd64
-rm -f $BIN/lemonade
-ln -s $BIN/lemonade_${sys_type} $BIN/lemonade
-mkdir -p ~/.config
-mv $ETC/lemonade.toml ~/.config/lemonade.toml
+# install oclip
+curl -s https://oclip.hanxi.info/install | bash -- /dev/stdin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9 '11111'
 
 # source init.sh
 sed -i "\:$ETC/init.sh:d" ~/.bashrc
