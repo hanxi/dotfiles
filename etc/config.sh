@@ -33,10 +33,16 @@ export https_proxy=$http_proxy
 export ftp_proxy=$http_proxy
 export rsync_proxy=$http_proxy
 
-# alias
-alias vim=nvim
-alias svn=svn-color.py
+# editor
+if command -v nvim > /dev/null 2>&1; then
+    alias vim=nvim
+    export VISUAL=nvim
+else
+    export VISUAL=vim
+fi
+export EDITOR="$VISUAL"
 
+alias svn=svn-color.py
 export HISTTIMEFORMAT="%d/%m/%y %T "
 
 # Alias for tree view of commit history.

@@ -9,7 +9,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree'                        " 目录树
 Plug 'yssl/QFEnter'                               " quick-fix 窗口快捷键
 Plug 'tpope/vim-fugitive'                         " git 操作
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' } " Fuzzy search. 文件列表，函数列表，Mru文件列表，rg grep
 Plug 'skywind3000/vim-preview'                    " 预览代码
 
 Plug 'KeitaNakamura/neodark.vim'                  " 颜色主题 neodark
@@ -18,13 +17,16 @@ Plug 'vim-airline/vim-airline-themes'             " 状态栏主题
 Plug 'edkolev/tmuxline.vim'                       " 生成 tmuxline color
 Plug 'edkolev/promptline.vim'                     " 生成 bash path color
 Plug 'plasticboy/vim-markdown'                    " markdown 语法高亮
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }} " markdown 预览
 
+if v:version > 801 || has('nvim')
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }} " markdown 预览
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' } " Fuzzy search. 文件列表，函数列表，Mru文件列表，rg grep
 Plug 'roxma/vim-hug-neovim-rpc'                   " for vim8 use ncm2
 Plug 'roxma/nvim-yarp'                            " for ncm2
 Plug 'ncm2/ncm2'                                  " 自动补全
 Plug 'ncm2/ncm2-bufword'                          " ncm2
 Plug 'ncm2/ncm2-path'                             " ncm2
+endif
 
 call plug#end()
 
@@ -56,8 +58,8 @@ endif
 if !empty(globpath(&rtp, "colors/neodark.vim"))
     let g:neodark#solid_vertsplit = 1
     let g:airline_theme='papercolor'
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum" " fixed color for $TERM=screen-256color
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    "let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum" " fixed color for $TERM=screen-256color
+    "let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
     colorscheme neodark
 endif
 "}}
@@ -98,7 +100,9 @@ set hidden
 set nobackup
 set nowritebackup
 set updatetime=300
-set shortmess+=c
+if v:version > 801 || has('nvim')
+    set shortmess+=c
+endif
 "}} 通用配置结束
 
 "{{ 快捷键配置
@@ -229,9 +233,11 @@ map <C-C><C-C> :call ClosePluginWindow()<cr>
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " enable ncm2 for all buffers
-autocmd BufEnter * call ncm2#enable_for_buffer()
-" IMPORTANTE: :help Ncm2PopupOpen for more information
-set completeopt=noinsert,menuone,noselect
+if v:version > 801 || has('nvim')
+    autocmd BufEnter * call ncm2#enable_for_buffer()
+    " IMPORTANTE: :help Ncm2PopupOpen for more information
+    set completeopt=noinsert,menuone,noselect
+endif
 "}
 
 "vim-preview{
