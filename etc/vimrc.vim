@@ -35,11 +35,10 @@ syn on
 syn enable
 set t_Co=256
 
-let g:left_sep="\uE0B4"
-let g:left_alt_sep="\uE0B5"
-let g:right_sep="\uE0B6"
-let g:right_alt_sep="\uE0B7"
-let g:dir_sep="\uE0B5"
+let g:left_sep=""
+let g:left_alt_sep=""
+let g:right_sep=""
+let g:right_alt_sep=""
 
 "fonts from https://github.com/ryanoasis/nerd-fonts
 
@@ -252,12 +251,11 @@ inoremap <m-n> <c-\><c-o>:PreviewSignature!<cr>
 "}
 
 "airline{
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 let g:airline_left_sep=g:left_sep
 let g:airline_left_alt_sep=g:left_alt_sep
 let g:airline_right_sep=g:right_sep
 let g:airline_right_alt_sep=g:right_alt_sep
-let g:airline_section_z = airline#section#create(["\uE0A1" . '%{line(".")}' . "\uE0A3" . '%{col(".")}'])
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
 let g:airline#extensions#tabline#show_tab_nr = 0
@@ -275,9 +273,9 @@ let g:promptline_symbols = {
             \ 'left_alt'      : g:left_alt_sep,
             \ 'right'         : g:right_sep,
             \ 'right_alt'     : g:right_alt_sep,
-            \ 'dir_sep'       : " ".g:dir_sep." ",
-            \ 'truncation'    : "...",
-            \ 'vcs_branch'    : "\uE0A0 "}
+            \ 'dir_sep'       : " > ",
+            \ 'truncation'    : "\u22EF",
+            \ 'vcs_branch'    : "\u16A0 "}
 if !empty(globpath(&rtp, "promptline.vim"))
     let g:promptline_preset = {
                 \ 'a' : [ promptline#slices#user() ],
