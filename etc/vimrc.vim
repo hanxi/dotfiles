@@ -18,7 +18,7 @@ Plug 'edkolev/tmuxline.vim'                       " 生成 tmuxline color
 Plug 'edkolev/promptline.vim'                     " 生成 bash path color
 Plug 'plasticboy/vim-markdown'                    " markdown 语法高亮
 
-if v:version > 801 || has('nvim')
+if (v:version > 801 || has('nvim') && has('python'))
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }} " markdown 预览
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' } " Fuzzy search. 文件列表，函数列表，Mru文件列表，rg grep
 Plug 'roxma/vim-hug-neovim-rpc'                   " for vim8 use ncm2
@@ -232,7 +232,7 @@ map <C-C><C-C> :call ClosePluginWindow()<cr>
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " enable ncm2 for all buffers
-if v:version > 801 || has('nvim')
+if (v:version > 801 || has('nvim') && has('python'))
     autocmd BufEnter * call ncm2#enable_for_buffer()
     " IMPORTANTE: :help Ncm2PopupOpen for more information
     set completeopt=noinsert,menuone,noselect
