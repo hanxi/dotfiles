@@ -185,6 +185,7 @@ let g:Lf_HideHelp = 1
 let g:Lf_StlColorscheme = 'powerline'
 let g:Lf_UseCache = 0
 let g:Lf_UseVersionControlTool = 0
+let g:Lf_ShowDevIcons = 0
 " 搜索选中的字符串，对结果按 i 支持二次过滤
 let g:Lf_RgConfig = [
     \ "--max-columns=150",

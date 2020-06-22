@@ -27,8 +27,8 @@ export TERM=xterm-256color
 export TERM_ITALICS=true
 
 # for http proxy
-#export http_proxy=http://192.168.29.221:5719/
-export http_proxy=
+export http_proxy=http://192.168.2.5:8080
+#export http_proxy=
 export https_proxy=$http_proxy
 export ftp_proxy=$http_proxy
 export rsync_proxy=$http_proxy
@@ -60,3 +60,8 @@ function my_cd() {
 set_tmux_pwd
 alias cd=my_cd
 
+
+alias l='ls -CF'
+alias la='ls -A'
+alias ll='ls -alF'
+alias ls='ls --color=auto'

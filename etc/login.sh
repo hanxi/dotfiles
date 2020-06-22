@@ -1,5 +1,5 @@
 # auto start tmux
-if [ -n "$TMUX"  ]; then
+if [ -z "$TMUX" ]; then
     tmux a || tmux
 fi
 
