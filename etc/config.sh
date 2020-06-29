@@ -27,8 +27,8 @@ export TERM=xterm-256color
 export TERM_ITALICS=true
 
 # for http proxy
-export http_proxy=http://192.168.2.5:8080
-#export http_proxy=
+#export http_proxy=http://192.168.2.5:8080
+export http_proxy=
 export https_proxy=$http_proxy
 export ftp_proxy=$http_proxy
 export rsync_proxy=$http_proxy
