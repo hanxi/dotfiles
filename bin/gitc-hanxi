@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
 name="涵曦"
-email="hanxi.info@gmail.com"
+email="im.hanxi@gmail.com"
 echo "Git info:"
 echo $name
 echo $email
