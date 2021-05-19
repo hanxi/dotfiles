@@ -18,7 +18,7 @@ Plug 'edkolev/tmuxline.vim'                       " 生成 tmuxline color
 Plug 'edkolev/promptline.vim'                     " 生成 bash path color
 Plug 'plasticboy/vim-markdown'                    " markdown 语法高亮
 
-if v:version > 801 || has('nvim')
+if (v:version > 801 || has('nvim') && has('python'))
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }} " markdown 预览
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' } " Fuzzy search. 文件列表，函数列表，Mru文件列表，rg grep
 Plug 'roxma/vim-hug-neovim-rpc'                   " for vim8 use ncm2
@@ -185,6 +185,7 @@ let g:Lf_HideHelp = 1
 let g:Lf_StlColorscheme = 'powerline'
 let g:Lf_UseCache = 0
 let g:Lf_UseVersionControlTool = 0
+let g:Lf_ShowDevIcons = 0
 " 搜索选中的字符串，对结果按 i 支持二次过滤
 let g:Lf_RgConfig = [
     \ "--max-columns=150",
@@ -232,7 +233,7 @@ map <C-C><C-C> :call ClosePluginWindow()<cr>
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " enable ncm2 for all buffers
-if v:version > 801 || has('nvim')
+if (v:version > 801 || has('nvim') && has('python'))
     autocmd BufEnter * call ncm2#enable_for_buffer()
     " IMPORTANTE: :help Ncm2PopupOpen for more information
     set completeopt=noinsert,menuone,noselect
@@ -299,7 +300,7 @@ let g:tmuxline_preset = {
             \'cwin' : '#I #W #F',
             \'x'    : '%Y-%m-%d',
             \'y'    : '%H:%M:%S',
-            \'z'    : "#(ifconfig | grep inet[^6] | awk -F'[:\t ]+' '{print $3,$4}' | sed 's/netmask//; s/addr//; s/ //' | grep -v '127.0.0.1' | grep -v '^10.0')",
+            \'z'    : "#(ip a| grep inet[^6] | awk '{print $2}' | sed 's/\\\\\\\\/.*//; s/ //' | grep -v '127.0.0.1' | grep -v '^10.0')",
             \'options': {
             \'status-justify':'left'}
             \}

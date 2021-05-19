@@ -22,7 +22,7 @@ cp -rf bin/* $BIN/
 cp bootstrap.sh $BIN/
 
 # install oclip
-curl -s https://oclip.hanxi.info/install | bash -- /dev/stdin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9 '11111'
+#curl -s https://oclip.hanxi.info/install | bash -- /dev/stdin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9 '11111'
 
 # source init.sh
 sed -i "\:$ETC/init.sh:d" ~/.bashrc
