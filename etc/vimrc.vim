@@ -5,6 +5,16 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+function! CheckVersion()
+    if (v:version < 801 && !has('nvim'))
+        return 0
+    endif
+    if (!has('python') && !has('python3'))
+        return 0
+    endif
+    return 1
+endfunction
+
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree'                        " 目录树
 Plug 'yssl/QFEnter'                               " quick-fix 窗口快捷键
@@ -18,9 +28,9 @@ Plug 'edkolev/tmuxline.vim'                       " 生成 tmuxline color
 Plug 'edkolev/promptline.vim'                     " 生成 bash path color
 Plug 'plasticboy/vim-markdown'                    " markdown 语法高亮
 
-if (v:version > 801 || has('nvim') && has('python'))
+if CheckVersion()
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }} " markdown 预览
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' } " Fuzzy search. 文件列表，函数列表，Mru文件列表，rg grep
+Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' } " Fuzzy search. 文件列表，函数列表，Mru文件列表，rg grep
 Plug 'roxma/vim-hug-neovim-rpc'                   " for vim8 use ncm2
 Plug 'roxma/nvim-yarp'                            " for ncm2
 Plug 'ncm2/ncm2'                                  " 自动补全
@@ -42,10 +52,8 @@ let g:right_alt_sep=""
 
 "fonts from https://github.com/ryanoasis/nerd-fonts
 
-if (has("nvim"))
-    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
+"For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
 "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
@@ -99,7 +107,7 @@ set hidden
 set nobackup
 set nowritebackup
 set updatetime=300
-if v:version > 801 || has('nvim')
+if CheckVersion()
     set shortmess+=c
 endif
 "}} 通用配置结束
@@ -233,7 +241,7 @@ map <C-C><C-C> :call ClosePluginWindow()<cr>
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " enable ncm2 for all buffers
-if (v:version > 801 || has('nvim') && has('python'))
+if CheckVersion()
     autocmd BufEnter * call ncm2#enable_for_buffer()
     " IMPORTANTE: :help Ncm2PopupOpen for more information
     set completeopt=noinsert,menuone,noselect
