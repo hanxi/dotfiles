@@ -300,7 +300,7 @@ let g:tmuxline_preset = {
             \'cwin' : '#I #W #F',
             \'x'    : '%Y-%m-%d',
             \'y'    : '%H:%M:%S',
-            \'z'    : "#(ip a| grep inet[^6] | awk '{print $2}' | sed 's/\\\\\\\\/.*//; s/ //' | grep -v '127.0.0.1' | grep -v '^10.0')",
+            \'z'    : "#(ip -4 a| grep inet | awk '{print $2}' | grep -v '127.0.0.1' | head -1)",
             \'options': {
             \'status-justify':'left'}
             \}
