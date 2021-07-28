@@ -201,7 +201,10 @@ let g:Lf_RgConfig = [
     \ "--glob=!git/*",
     \ "--follow --no-ignore"
     \ ]
-xnoremap gs :<C-U><C-R>=printf("Leaderf! rg -F -t proto -t c -t py -t lua --nowrap --stayOpen -e %s ", leaderf#Rg#visual())<cr><cr>
+" select g searce select word
+xnoremap g :<C-U><C-R>=printf("Leaderf! rg -F -t proto -t c -t py -t lua --nowrap --stayOpen -e %s ", leaderf#Rg#visual())<cr><cr>
+" leader g search current word
+noremap <leader>g :<C-U><C-R>=printf("Leaderf! rg -F -t proto -t c -t py -t lua --nowrap --stayOpen -e %s ", expand("<cword>"))<cr><cr>
 
 " gtags
 let g:Lf_GtagsAutoGenerate = 1
@@ -214,7 +217,7 @@ noremap <leader>r :<C-U><C-R>=printf("Leaderf! gtags -r %s", expand("<cword>"))<
 " symbol 
 noremap <leader>s :<C-U><C-R>=printf("Leaderf! gtags -s %s", expand("<cword>"))<cr><cr>
 " grep
-noremap <leader>g :<C-U><C-R>=printf("Leaderf! gtags -g %s", expand("<cword>"))<cr><cr>
+"noremap <leader>g :<C-U><C-R>=printf("Leaderf! gtags -g %s", expand("<cword>"))<cr><cr>
 
 function! ClosePluginWindow()
     " Close quickfix
