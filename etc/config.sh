@@ -32,6 +32,7 @@ export http_proxy=
 export https_proxy=$http_proxy
 export ftp_proxy=$http_proxy
 export rsync_proxy=$http_proxy
+export ALL_PROXY=$http_proxy
 
 # editor
 if command -v nvim > /dev/null 2>&1; then
