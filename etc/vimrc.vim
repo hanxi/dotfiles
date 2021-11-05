@@ -201,8 +201,8 @@ let g:Lf_RgConfig = [
     \ "--glob=!git/*",
     \ "--follow --no-ignore"
     \ ]
-" select g searce select word
-xnoremap g :<C-U><C-R>=printf("Leaderf! rg -F -t proto -t c -t py -t lua --nowrap --stayOpen -e %s ", leaderf#Rg#visual())<cr><cr>
+" select gs searce select word
+xnoremap gs :<C-U><C-R>=printf("Leaderf! rg -F -t proto -t c -t py -t lua --nowrap --stayOpen -e %s ", leaderf#Rg#visual())<cr><cr>
 " leader g search current word
 noremap <leader>g :<C-U><C-R>=printf("Leaderf! rg -F -t proto -t c -t py -t lua --nowrap --stayOpen -e %s ", expand("<cword>"))<cr><cr>
 
