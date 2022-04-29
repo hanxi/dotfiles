@@ -5,7 +5,11 @@ local wezterm = require "wezterm"
 
 local launch_menu = {}
 
+local ssh_cmd = {"ssh"}
+
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
+    ssh_cmd = {"powershell.exe", "ssh"}
+
     table.insert(
         launch_menu,
         {
@@ -39,11 +43,16 @@ if f then
     while line do
         if line:find("Host ") == 1 then
             local host = line:gsub("Host ", "")
+            local args = {}
+            for i,v in pairs(ssh_cmd) do
+                args[i] = v
+            end
+            args[#args+1] = host
             table.insert(
                 launch_menu,
                 {
                     label = "SSH " .. host,
-                    args = {"powershell.exe", "ssh", host}
+                    args = args,
                 }
             )
         end

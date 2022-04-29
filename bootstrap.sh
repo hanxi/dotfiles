@@ -61,6 +61,6 @@ else
 fi
 
 # install wezterm
-cp -rf ~/.config/wezterm
+rm -rf ~/.config/wezterm
 ln -s $ETC/wezterm ~/.config/wezterm
 
