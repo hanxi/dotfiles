@@ -1,7 +1,6 @@
 "{{ 插件安装 vim-plug
 if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
@@ -107,6 +106,7 @@ set hidden
 set nobackup
 set nowritebackup
 set updatetime=300
+set belloff=all                         " 关闭闪烁
 if CheckVersion()
     set shortmess+=c
 endif
