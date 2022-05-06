@@ -105,5 +105,6 @@ return {
     window_frame = window_frame, -- needed only if using fancy tab
     launch_menu = launch_menu,
     mouse_bindings = mouse_bindings,
-    default_prog = default_prog
+    default_prog = default_prog,
+    harfbuzz_features={"calt=0", "clig=0", "liga=0"}
 }
