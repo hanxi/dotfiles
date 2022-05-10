@@ -29,10 +29,6 @@ sed -i "\:$ETC/init.sh:d" ~/.bashrc
 echo ". $ETC/init.sh" >> ~/.bashrc
 . ~/.bashrc
 
-# for neovim
-mkdir -p ~/.config/nvim
-cp $ETC/init.vim ~/.config/nvim/init.vim
-
 # source vimrc.vim
 touch ~/.vimrc
 sed -i "\:$ETC/vimrc.vim:d" ~/.vimrc
@@ -51,9 +47,7 @@ git config --global color.interactive auto
 git config --global core.quotepath false
 
 # install vim plug
-if command -v nvim 2>/dev/null; then
-    nvim +PlugInstall +qall
-else
+if ! command -v nvim 2>/dev/null; then
     vim_version=`vim --version | head -1`
     if [[ `echo $vim_version | awk -F '[ .]' '{print $5}'` -gt 7 ]]; then
         vim +PlugInstall +qall
@@ -63,4 +57,20 @@ fi
 # install wezterm
 rm -rf ~/.config/wezterm
 ln -s $ETC/wezterm ~/.config/wezterm
+
+# for neovim
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+echo ${machine}
+
+if [ $machine == "Linux" ]; then
+    echo "install nvim"
+    curl https://raw.githubusercontent.com/hanxi/nvim-config/master/docs/nvim_setup_linux.sh | bash
+fi
 
