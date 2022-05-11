@@ -27,12 +27,15 @@ export TERM=xterm-256color
 export TERM_ITALICS=true
 
 # for http proxy
-export http_proxy=http://192.168.2.5:8080
-#export http_proxy=
+#export http_proxy=http://192.168.2.5:8080
+export http_proxy=
 export https_proxy=$http_proxy
 export ftp_proxy=$http_proxy
 export rsync_proxy=$http_proxy
 export ALL_PROXY=$http_proxy
+
+alias proxyon="setproxy on; . ~/.local/etc/config.sh"
+alias proxyoff="setproxy off; . ~/.local/etc/config.sh"
 
 # editor
 if command -v nvim > /dev/null 2>&1; then

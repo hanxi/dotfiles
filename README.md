@@ -20,9 +20,7 @@ But I suggest use your own repository fork from this.
 
 ## Others
 
-I use putty.
-
-Fonts from [powerline SourceCodePro](https://github.com/powerline/fonts/tree/master/SourceCodePro).
+I use wezterm, config in `etc/wezterm/` .
 
 Self init info for me. like change git info:
 
