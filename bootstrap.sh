@@ -56,6 +56,7 @@ fi
 
 # install wezterm
 rm -rf ~/.config/wezterm
+mkdir -p ~/.config
 ln -s $ETC/wezterm ~/.config/wezterm
 
 # for neovim

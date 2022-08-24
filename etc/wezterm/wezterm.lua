@@ -83,21 +83,24 @@ local mouse_bindings = {
     }
 }
 
-local default_prog = {"powershell.exe", "ssh", "home"}
+local default_prog = {"powershell.exe", "ssh", "vm"}
 
-wezterm.on(
-    "update-right-status",
-    function(window)
-        local date = wezterm.strftime("%Y-%m-%d %H:%M:%S ")
-        window:set_right_status(
-            wezterm.format(
-                {
-                    {Text = date}
-                }
-            )
+wezterm.on( "update-right-status", function(window)
+    local date = wezterm.strftime("%Y-%m-%d %H:%M:%S ")
+    window:set_right_status(
+        wezterm.format(
+            {
+                {Text = date}
+            }
         )
-    end
-)
+    )
+end)
+
+local mux = wezterm.mux
+wezterm.on("gui-startup", function()
+  local tab, pane, window = mux.spawn_window{}
+  window:gui_window():maximize()
+end)
 
 return {
     color_scheme = "rose-pine",
