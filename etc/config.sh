@@ -23,8 +23,9 @@ export LD_LIBRARY_PATH=$HOME/.local/lib:$LD_LIBRARY_PATH
 export PKG_CONFIG_PATH=$HOME/.local/lib/pkgconfig:$PKG_CONFIG_PATH
 
 # for tmux
-export TERM=screen-256color
-export TERM_ITALICS=true
+export TERM=xterm-256color
+#export TERM=screen-256color
+#export TERM_ITALICS=true
 
 # for http proxy
 #export http_proxy=http://192.168.2.5:8080
@@ -46,7 +47,7 @@ else
 fi
 export EDITOR="$VISUAL"
 
-alias svn=svn-color.py
+#alias svn=svn-color.py
 export HISTTIMEFORMAT="%d/%m/%y %T "
 
 # Alias for tree view of commit history.
@@ -69,20 +70,4 @@ alias l='ls -CF'
 alias la='ls -A'
 alias ll='ls -alF'
 alias ls='ls --color=auto'
-
-# set less color
-LESS_TERMCAP_mb=$(tput -T ansi blink) # start bold
-LESS_TERMCAP_md=$(tput -T ansi setaf 2 ; tput -T ansi bold) # start bold
-LESS_TERMCAP_me=$(tput -T ansi sgr0)  # turn off bold, blink and underline
-LESS_TERMCAP_so=$(tput -T ansi smso)  # start standout (reverse video)
-LESS_TERMCAP_se=$(tput -T ansi rmso)  # stop standout
-LESS_TERMCAP_us=$(tput -T ansi smul)  # start underline
-LESS_TERMCAP_ue=$(tput -T ansi rmul)  # stop underline
-export LESS_TERMCAP_mb
-export LESS_TERMCAP_md
-export LESS_TERMCAP_me
-export LESS_TERMCAP_se
-export LESS_TERMCAP_so
-export LESS_TERMCAP_ue
-export LESS_TERMCAP_us
 

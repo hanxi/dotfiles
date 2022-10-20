@@ -11,7 +11,6 @@ Plug 'tpope/vim-fugitive'                         " git 操作
 
 Plug 'catppuccin/vim', { 'as': 'catppuccin' }     " 颜色主题 catppuccin
 Plug 'itchyny/lightline.vim'
-Plug 'edkolev/tmuxline.vim'                       " 生成 tmuxline color
 Plug 'edkolev/promptline.vim'                     " 生成 bash path color
 Plug 'plasticboy/vim-markdown'                    " markdown 语法高亮
 call plug#end()
@@ -35,8 +34,8 @@ if (has("termguicolors"))
     set termguicolors
 endif
 
-let g:lightline = {'colorscheme': 'catppuccin_latte'}
 colorscheme catppuccin_latte
+let g:lightline = {'colorscheme': 'catppuccin_latte'}
 "let g:lightline = {'colorscheme': 'catppuccin_mocha'}
 "colorscheme catppuccin_mocha
 "}}
@@ -193,42 +192,21 @@ let g:qfenter_keymap.topen = ['t']
 "}
 
 "promptline{
-":PromptlineSnapshot! ~/.local/etc/shell_prompt.sh
-let g:promptline_symbols = {
-            \ 'left'          : g:left_sep,
-            \ 'left_alt'      : g:left_alt_sep,
-            \ 'right'         : g:right_sep,
-            \ 'right_alt'     : g:right_alt_sep,
-            \ 'dir_sep'       : " > ",
-            \ 'truncation'    : "\u22EF",
-            \ 'vcs_branch'    : "\u16A0 "}
-if !empty(globpath(&rtp, "promptline.vim"))
-    let g:promptline_preset = {
-                \ 'a' : [ promptline#slices#user() ],
-                \ 'c' : [ promptline#slices#cwd() ],
-                \ 'y' : [ promptline#slices#vcs_branch() ]}
-endif
-"}
-
-"tmuxline{
-":Tmuxline airline
-":TmuxlineSnapshot! ~/.local/etc/tmuxline.conf
-let g:tmuxline_separators = {
-            \ 'left'     : g:left_sep,
-            \ 'left_alt' : g:left_alt_sep,
-            \ 'right'    : g:right_sep,
-            \ 'right_alt': g:right_alt_sep}
-    
-let g:tmuxline_preset = {
-            \'a'    : '#S',
-            \'win'  : '#I #W',
-            \'cwin' : '#I #W #F',
-            \'x'    : '%Y-%m-%d',
-            \'y'    : '%H:%M:%S',
-            \'z'    : "#(ip -4 a| grep inet | awk '{print $2}' | grep -v '127.0.0.1' | head -1)",
-            \'options': {
-            \'status-justify':'left'}
-            \}
+":PromptlineSnapshot! ~/.local/etc/shell_prompt.sh lightline
+"let g:promptline_symbols = {
+"            \ 'left'          : g:left_sep,
+"            \ 'left_alt'      : g:left_alt_sep,
+"            \ 'right'         : g:right_sep,
+"            \ 'right_alt'     : g:right_alt_sep,
+"            \ 'dir_sep'       : " > ",
+"            \ 'truncation'    : "\u22EF",
+"            \ 'vcs_branch'    : "\u16A0 "}
+"if !empty(globpath(&rtp, "promptline.vim"))
+"    let g:promptline_preset = {
+"                \ 'a' : [ promptline#slices#user() ],
+"                \ 'c' : [ promptline#slices#cwd() ],
+"                \ 'y' : [ promptline#slices#vcs_branch() ]}
+"endif
 "}
 
 "{ vim-markdown
