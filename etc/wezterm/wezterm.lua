@@ -1,6 +1,3 @@
-local colors = require("lua/rose-pine").colors()
-local window_frame = require("lua/rose-pine").window_frame()
-
 local wezterm = require "wezterm"
 
 local launch_menu = {}
@@ -102,12 +99,22 @@ wezterm.on("gui-startup", function()
   window:gui_window():maximize()
 end)
 
+local window_padding = {
+    left = '1.2cell',
+    right = '0.5cell',
+    top = '0.5cell',
+    bottom = '0.5cell',
+}
+
+local cappuccin = require("lua/catppuccin").select("latte")
+
 return {
-    color_scheme = "rose-pine",
-    colors = colors,
-    window_frame = window_frame, -- needed only if using fancy tab
+    use_fancy_tab_bar = false,
+    colors = cappuccin,
+    window_decorations = "TITLE | RESIZE",
+    window_padding = window_padding,
     launch_menu = launch_menu,
     mouse_bindings = mouse_bindings,
     default_prog = default_prog,
-    harfbuzz_features={"calt=0", "clig=0", "liga=0"}
+    harfbuzz_features = {"calt=0", "clig=0", "liga=0"},
 }

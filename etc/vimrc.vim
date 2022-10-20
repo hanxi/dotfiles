@@ -9,9 +9,8 @@ Plug 'scrooloose/nerdtree'                        " 目录树
 Plug 'yssl/QFEnter'                               " quick-fix 窗口快捷键
 Plug 'tpope/vim-fugitive'                         " git 操作
 
-Plug 'KeitaNakamura/neodark.vim'                  " 颜色主题 neodark
-Plug 'vim-airline/vim-airline'                    " 状态栏
-Plug 'vim-airline/vim-airline-themes'             " 状态栏主题
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }     " 颜色主题 catppuccin
+Plug 'itchyny/lightline.vim'
 Plug 'edkolev/tmuxline.vim'                       " 生成 tmuxline color
 Plug 'edkolev/promptline.vim'                     " 生成 bash path color
 Plug 'plasticboy/vim-markdown'                    " markdown 语法高亮
@@ -29,9 +28,6 @@ let g:right_alt_sep=""
 
 "fonts from https://github.com/ryanoasis/nerd-fonts
 
-"For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-
 "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
 "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
 " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
@@ -39,13 +35,10 @@ if (has("termguicolors"))
     set termguicolors
 endif
 
-if !empty(globpath(&rtp, "colors/neodark.vim"))
-    let g:neodark#solid_vertsplit = 1
-    let g:airline_theme='papercolor'
-    "let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum" " fixed color for $TERM=screen-256color
-    "let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-    colorscheme neodark
-endif
+let g:lightline = {'colorscheme': 'catppuccin_latte'}
+colorscheme catppuccin_latte
+"let g:lightline = {'colorscheme': 'catppuccin_mocha'}
+"colorscheme catppuccin_mocha
 "}}
 
 "{{ 通用配置
@@ -199,24 +192,8 @@ let g:qfenter_keymap.hopen = ['<C-CR>', '<C-s>', '<C-x>']
 let g:qfenter_keymap.topen = ['t']
 "}
 
-"airline{
-let g:airline_powerline_fonts = 0
-let g:airline_left_sep=g:left_sep
-let g:airline_left_alt_sep=g:left_alt_sep
-let g:airline_right_sep=g:right_sep
-let g:airline_right_alt_sep=g:right_alt_sep
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline#extensions#tabline#show_tab_nr = 0
-let g:airline#extensions#tabline#show_close_button = 0
-let g:airline#extensions#default#layout = [
-      \ [ 'a', 'b', 'c' ],
-      \ [ 'x', 'y', 'z' ]
-      \ ]
-"}
-
 "promptline{
-":PromptlineSnapshot! ~/.local/etc/shell_prompt.sh airline
+":PromptlineSnapshot! ~/.local/etc/shell_prompt.sh
 let g:promptline_symbols = {
             \ 'left'          : g:left_sep,
             \ 'left_alt'      : g:left_alt_sep,
