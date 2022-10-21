@@ -34,8 +34,10 @@ if (has("termguicolors"))
     set termguicolors
 endif
 
-colorscheme catppuccin_latte
-let g:lightline = {'colorscheme': 'catppuccin_latte'}
+if !empty(globpath(&rtp, "colors/catppuccin_latte.vim"))
+    colorscheme catppuccin_latte
+    let g:lightline = {'colorscheme': 'catppuccin_latte'}
+endif
 "let g:lightline = {'colorscheme': 'catppuccin_mocha'}
 "colorscheme catppuccin_mocha
 "}}
