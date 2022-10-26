@@ -21,9 +21,6 @@ cp -rf etc/* $ETC/
 cp -rf bin/* $BIN/
 cp bootstrap.sh $BIN/
 
-# install oclip
-#curl -s https://oclip.hanxi.info/install | bash -- /dev/stdin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9 '11111'
-
 # source init.sh
 sed -i "\:$ETC/init.sh:d" ~/.bashrc
 echo ". $ETC/init.sh" >> ~/.bashrc
@@ -45,6 +42,17 @@ git config --global color.diff auto
 git config --global color.branch auto
 git config --global color.interactive auto
 git config --global core.quotepath false
+git config --global push.default simple
+git config --global core.autocrlf false
+git config --global core.ignorecase false
+git config --global core.pager delta
+git config --global interactive.diffFilter delta
+git config --global add.interactive.useBuiltin
+git config --global delta.navigate true
+git config --global delta.light true
+git config --global delta.side-by-side true
+git config --global merge.conflictstyle diff3
+git config --global diff.colorMoved default
 
 # install vim plug
 if ! command -v nvim 2>/dev/null; then
@@ -59,7 +67,6 @@ rm -rf ~/.config/wezterm
 mkdir -p ~/.config
 ln -s $ETC/wezterm ~/.config/wezterm
 
-# for neovim
 unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*)     machine=Linux;;
@@ -72,6 +79,6 @@ echo ${machine}
 
 if [ $machine == "Linux" ]; then
     echo "install nvim"
-    curl https://raw.githubusercontent.com/hanxi/nvim-config/master/docs/nvim_setup_linux.sh | bash
+	bash ~/.local/dotfiles/setup_ubuntu2204.sh
 fi
 

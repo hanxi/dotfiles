@@ -1,5 +1,4 @@
 sudo groupadd docker
-sudo usermod -aG docker $USER
-newgrp docker
-sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
-sudo chmod g+rwx "$HOME/.docker" -R
+sudo gpasswd -a ${USER} docker
+sudo service docker restart
+sudo newgrp docker

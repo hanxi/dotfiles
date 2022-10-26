@@ -1,12 +1,20 @@
 #!/bin/bash
 
 op=$1
+addr=$2
 
 if [ -z $op ]; then
     op="on"
 fi
 
-addr="192.168.2.5:8080"
+if [ -z $addr ]; then
+	#addr="192.168.2.5:8080"
+	touch ~/.local/etc/.proxy
+	. ~/.local/etc/.proxy
+else
+	echo 'addr="'$addr'"' > ~/.local/etc/.proxy
+fi
+
 etc_config=$HOME/.local/etc/config.sh
 
 if [[ "$op" == "on" ]]; then
