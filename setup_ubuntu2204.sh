@@ -1,6 +1,5 @@
 #!/bin/bash
-set -exu
-set -o pipefail
+set -x
 
 USE_CACHE=false
 USE_CACHE=true
@@ -167,13 +166,14 @@ else
 fi
 
 # install gvm
-curl https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer | bash \
-    && source $HOME/.gvm/scripts/gvm && gvm install go1.4 -B \
-    && gvm use go1.4 \
-    && export GOROOT_BOOTSTRAP=$GOROOT \
-    && gvm install go1.18 \
-    && gvm use go1.18 --default \
-	&& go install golang.org/x/tools/gopls@latest
+curl https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer | bash
+source $HOME/.gvm/scripts/gvm
+gvm install go1.4 -B
+gvm use go1.4
+export GOROOT_BOOTSTRAP=$GOROOT
+gvm install go1.18
+gvm use go1.18 --default
+go install golang.org/x/tools/gopls@latest
 
 # install delta
 musl=$([[ $(lsb_release -r | cut -f2) == "20.04" ]] && echo "" || echo "-musl") # https://github.com/dandavison/delta/issues/504

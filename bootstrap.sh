@@ -3,6 +3,21 @@
 set -e
 set -x
 
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+echo ${machine}
+
+if [ $machine == "Linux" ]; then
+    echo "install nvim"
+    bash ~/.local/dotfiles/setup_ubuntu2204.sh
+fi
+
 ETC=~/.local/etc
 BIN=~/.local/bin
 mkdir -p $ETC
@@ -55,30 +70,13 @@ git config --global merge.conflictstyle diff3
 git config --global diff.colorMoved default
 
 # install vim plug
-if ! command -v nvim 2>/dev/null; then
-    vim_version=`vim --version | head -1`
-    if [[ `echo $vim_version | awk -F '[ .]' '{print $5}'` -gt 7 ]]; then
-        vim +PlugInstall +qall
-    fi
+vim_version=`\vim --version | head -1`
+if [[ `echo $vim_version | awk -F '[ .]' '{print $5}'` -gt 7 ]]; then
+    \vim +PlugInstall +qall
 fi
 
 # install wezterm
 rm -rf ~/.config/wezterm
 mkdir -p ~/.config
 ln -s $ETC/wezterm ~/.config/wezterm
-
-unameOut="$(uname -s)"
-case "${unameOut}" in
-    Linux*)     machine=Linux;;
-    Darwin*)    machine=Mac;;
-    CYGWIN*)    machine=Cygwin;;
-    MINGW*)     machine=MinGw;;
-    *)          machine="UNKNOWN:${unameOut}"
-esac
-echo ${machine}
-
-if [ $machine == "Linux" ]; then
-    echo "install nvim"
-	bash ~/.local/dotfiles/setup_ubuntu2204.sh
-fi
 
