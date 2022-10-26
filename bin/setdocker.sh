@@ -14,3 +14,4 @@ sudo adduser $USER docker
 newgrp docker
 sudo systemctl restart docker
 docker ps # this now works because my user is in the group
+

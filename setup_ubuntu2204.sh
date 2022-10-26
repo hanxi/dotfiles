@@ -183,21 +183,21 @@ curl -fsSL https://github.com/dandavison/delta/releases/download/0.14.0/git-delt
 #######################################################################
 # setup nvim config
 #######################################################################
-### echo "Setting up config and installing plugins"
-### if [[ -d "$NVIM_CONFIG_DIR" ]]; then
-###     rm -rf "$NVIM_CONFIG_DIR.backup"
-###     mv "$NVIM_CONFIG_DIR" "$NVIM_CONFIG_DIR.backup"
-### fi
-###
-### git clone --depth=1 https://github.com/hanxi/nvim-config.git "$NVIM_CONFIG_DIR"
-###
-### echo "Installing packer.nvim"
-### if [[ ! -d ~/.local/share/nvim/site/pack/packer/opt/packer.nvim ]]; then
-###     git clone --depth=1 https://github.com/wbthomason/packer.nvim \
-###         ~/.local/share/nvim/site/pack/packer/opt/packer.nvim
-### fi
-###
-### echo "Installing nvim plugins, please wait"
-### "$NVIM_DIR/bin/nvim" -c "autocmd User PackerComplete quitall" -c "PackerSync"
-###
-### echo "Finished installing Nvim and its dependencies!"
+echo "Setting up config and installing plugins"
+if [[ -d "$NVIM_CONFIG_DIR" ]]; then
+    rm -rf "$NVIM_CONFIG_DIR.backup"
+    mv "$NVIM_CONFIG_DIR" "$NVIM_CONFIG_DIR.backup"
+fi
+
+git clone --depth=1 https://github.com/hanxi/nvim-config.git "$NVIM_CONFIG_DIR"
+
+echo "Installing packer.nvim"
+if [[ ! -d ~/.local/share/nvim/site/pack/packer/opt/packer.nvim ]]; then
+    git clone --depth=1 https://github.com/wbthomason/packer.nvim \
+        ~/.local/share/nvim/site/pack/packer/opt/packer.nvim
+fi
+
+echo "Installing nvim plugins, please wait"
+"$NVIM_DIR/bin/nvim" -c "autocmd User PackerComplete quitall" -c "PackerSync"
+
+echo "Finished installing Nvim and its dependencies!"
