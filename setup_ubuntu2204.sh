@@ -74,7 +74,7 @@ fi
 sed -i "\:"$NODE_DIR/bin":d" "$HOME/.bashrc"
 echo "export PATH=\"$NODE_DIR/bin:\$PATH\"" >> "$HOME/.bashrc"
 
-source "$HOME/.bashrc"
+export PATH="$NODE_DIR/bin:$PATH"
 
 # Install vim-language-server
 "$NODE_DIR/bin/npm" install -g vim-language-server
