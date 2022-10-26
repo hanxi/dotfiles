@@ -47,7 +47,7 @@ git config --global core.autocrlf false
 git config --global core.ignorecase false
 git config --global core.pager delta
 git config --global interactive.diffFilter delta
-git config --global add.interactive.useBuiltin
+git config --global add.interactive.useBuiltin false
 git config --global delta.navigate true
 git config --global delta.light true
 git config --global delta.side-by-side true
