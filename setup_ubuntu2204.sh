@@ -139,11 +139,6 @@ curl -fsSL https://github.com/dandavison/delta/releases/download/0.14.0/git-delt
 #######################################################################
 echo "Setting up config and installing plugins"
 if [[ -d "$NVIM_CONFIG_DIR" ]]; then
-    rm -rf "$NVIM_CONFIG_DIR.backup"
-    mv "$NVIM_CONFIG_DIR" "$NVIM_CONFIG_DIR.backup"
-fi
-
-if [[ -d "$NVIM_CONFIG_DIR" ]]; then
     cd "$NVIM_CONFIG_DIR"
     git pull
 else
