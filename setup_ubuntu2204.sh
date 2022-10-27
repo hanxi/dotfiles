@@ -101,10 +101,6 @@ else
     echo "ctags is already installed. Skip installing it."
 fi
 
-# install clangd
-sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
-sudo ln -sfT $(ls -1 /usr/bin/clangd* | tail -1) /usr/bin/clangd
-
 #######################################################################
 # Nvim install
 #######################################################################
@@ -133,16 +129,6 @@ else
     echo "Nvim is already installed. Skip installing it."
 fi
 
-# install gvm
-curl https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer | bash
-source $HOME/.gvm/scripts/gvm
-gvm install go1.4 -B
-gvm use go1.4
-export GOROOT_BOOTSTRAP=$GOROOT
-gvm install go1.18
-gvm use go1.18 --default
-go install golang.org/x/tools/gopls@latest
-
 # install delta
 musl=$([[ $(lsb_release -r | cut -f2) == "20.04" ]] && echo "" || echo "-musl") # https://github.com/dandavison/delta/issues/504
 arch=$([[ $(uname -m) == "x86_64" ]] && echo "amd64" || echo "armhf")
@@ -157,7 +143,14 @@ if [[ -d "$NVIM_CONFIG_DIR" ]]; then
     mv "$NVIM_CONFIG_DIR" "$NVIM_CONFIG_DIR.backup"
 fi
 
-git clone --depth=1 https://github.com/hanxi/nvim-config.git "$NVIM_CONFIG_DIR"
+if [[ -d "$NVIM_CONFIG_DIR" ]]; then
+    cd "$NVIM_CONFIG_DIR"
+    git pull
+else
+    git clone --depth=1 https://github.com/hanxi/nvim-config.git "$NVIM_CONFIG_DIR"
+    cd "$NVIM_CONFIG_DIR"
+fi
+
 
 echo "Installing packer.nvim"
 if [[ ! -d ~/.local/share/nvim/site/pack/packer/opt/packer.nvim ]]; then
