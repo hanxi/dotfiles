@@ -5,9 +5,9 @@ USE_CACHE=false
 USE_CACHE=true
 
 #######################################################################
-# install pre
+# pre install
 #######################################################################
-sudo apt install -y gcc make g++ tmux bison bash-completion subversion tig
+sudo apt install -y gcc make g++ tmux bison bash-completion subversion tig unzip
 
 #######################################################################
 # install python3
