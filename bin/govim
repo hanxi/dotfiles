@@ -1,0 +1,10 @@
+#!/bin/bash
+
+path=$1
+dir=$(cd $(dirname $path); pwd)
+gopath=$(echo $dir | grep -oP '.*/go')
+if [[ ! -z $gopath ]]; then
+    export GOPATH=$gopath
+fi
+
+nvim $path
