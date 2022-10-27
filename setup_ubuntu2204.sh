@@ -50,38 +50,6 @@ for p in "${py_packages[@]}"; do
 done
 
 #######################################################################
-# Install node and js-based language server
-#######################################################################
-NODE_DIR=$HOME/.local/tools/nodejs
-NODE_SRC_NAME=$HOME/.local/packages/nodejs.tar.gz
-# when download speed is slow, we can also use its mirror site: https://mirrors.ustc.edu.cn/node/v19.0.0/
-NODE_LINK="https://mirrors.ustc.edu.cn/node/v19.0.0/node-v19.0.0-linux-x64.tar.xz"
-
-echo "Install Node.js"
-if [[ "$USE_CACHE" = false || ! -f $NODE_SRC_NAME ]]; then
-    echo "Downloading Node.js and renaming"
-    wget $NODE_LINK -O "$NODE_SRC_NAME"
-fi
-
-if [[ "$USE_CACHE" = false || ! -d "$NODE_DIR" ]]; then
-    echo "Creating Node.js directory under tools directory"
-    mkdir -p "$NODE_DIR"
-    echo "Extracting to $HOME/.local/tools/nodejs directory"
-    tar xvf "$NODE_SRC_NAME" -C "$NODE_DIR" --strip-components 1
-fi
-
-sed -i "\:"$NODE_DIR/bin":d" "$HOME/.bashrc"
-echo "export PATH=\"$NODE_DIR/bin:\$PATH\"" >> "$HOME/.bashrc"
-
-export PATH="$NODE_DIR/bin:$PATH"
-
-# Install vim-language-server
-"$NODE_DIR/bin/npm" install -g vim-language-server
-
-# Install bash-language-server
-"$NODE_DIR/bin/npm" install -g bash-language-server
-
-#######################################################################
 # Ripgrep part
 #######################################################################
 RIPGREP_DIR=$HOME/.local/tools/ripgrep
