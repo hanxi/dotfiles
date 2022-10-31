@@ -7,4 +7,4 @@ if [[ ! -z $gopath ]]; then
     export GOPATH=$gopath
 fi
 
-nvim $path
+nvim $@
