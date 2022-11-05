@@ -34,5 +34,12 @@ gitc-hanxi
 
 ## Why?
 
-https://zhuanlan.zhihu.com/p/50080614
+https://zhuanlan.zhihu.com/p/50080614c
+
+## Screenshot
+
+![image](https://user-images.githubusercontent.com/1185757/200135182-3eef46c2-9a2f-49de-abc7-df479cb62918.png)
+
+![image](https://user-images.githubusercontent.com/1185757/200135214-e6537044-50f4-4783-9add-13d667b6ca34.png)
+
 
