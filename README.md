@@ -32,10 +32,6 @@ Self init info for me. like change git info:
 gitc-hanxi
 ```
 
-## Why?
-
-https://zhuanlan.zhihu.com/p/50080614c
-
 ## Screenshot
 
 ![image](https://user-images.githubusercontent.com/1185757/200135182-3eef46c2-9a2f-49de-abc7-df479cb62918.png)
