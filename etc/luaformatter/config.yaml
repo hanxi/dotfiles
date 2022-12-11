@@ -1,0 +1,11 @@
+column_limit: 120
+keep_simple_function_one_line: false
+column_table_limit: 20
+chop_down_table: true
+chop_down_kv_table: true
+align_args: false
+align_parameter: false
+chop_down_parameter: false
+break_after_functiondef_lp: true
+break_before_functiondef_rp: false
+extra_sep_at_table_end: true

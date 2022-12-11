@@ -80,3 +80,7 @@ rm -rf ~/.config/wezterm
 mkdir -p ~/.config
 ln -s $ETC/wezterm ~/.config/wezterm
 
+# install luaformatter config
+rm -rf ~/.config/luaformatter
+ln -s $ETC/luaformatter ~/.config/luaformatter
+
