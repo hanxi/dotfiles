@@ -83,7 +83,7 @@ local mouse_bindings = {
 local default_prog = {"powershell.exe", "ssh", "vm"}
 
 wezterm.on( "update-right-status", function(window)
-    local date = wezterm.strftime("%Y-%m-%d %H:%M:%S ")
+    local date = wezterm.strftime("%Y-%m-%d %H:%M:%S   ")
     window:set_right_status(
         wezterm.format(
             {
@@ -99,20 +99,11 @@ wezterm.on("gui-startup", function()
   window:gui_window():maximize()
 end)
 
-local window_padding = {
-    left = '1.2cell',
-    right = '0.5cell',
-    top = '0.5cell',
-    bottom = '0.5cell',
-}
-
 local cappuccin = require("lua/catppuccin").select("latte")
-
 return {
     use_fancy_tab_bar = false,
+    window_decorations="INTEGRATED_BUTTONS|RESIZE",
     colors = cappuccin,
-    window_decorations = "TITLE | RESIZE",
-    window_padding = window_padding,
     launch_menu = launch_menu,
     mouse_bindings = mouse_bindings,
     default_prog = default_prog,
