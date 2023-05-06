@@ -147,14 +147,4 @@ else
     cd "$NVIM_CONFIG_DIR"
 fi
 
-
-echo "Installing packer.nvim"
-if [[ ! -d ~/.local/share/nvim/site/pack/packer/opt/packer.nvim ]]; then
-    git clone --depth=1 https://github.com/wbthomason/packer.nvim \
-        ~/.local/share/nvim/site/pack/packer/opt/packer.nvim
-fi
-
-echo "Installing nvim plugins, please wait"
-"$NVIM_DIR/bin/nvim" -c "autocmd User PackerComplete quitall" -c "PackerSync"
-
 echo "Finished installing Nvim and its dependencies!"
