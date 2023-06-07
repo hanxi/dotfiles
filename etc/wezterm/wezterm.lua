@@ -99,7 +99,17 @@ wezterm.on("gui-startup", function()
   window:gui_window():maximize()
 end)
 
-local cappuccin = require("lua/catppuccin").select("latte")
+local tab_bar_style = {
+    window_hide = " - ",
+    window_maximize = " + ",
+    window_close = " X ",
+
+    window_hide_hover = " - ",
+    window_maximize_hover = " + ",
+    window_close_hover = " X ",
+}
+
+local cappuccin = require("lua/catppuccin").select("frappe")
 return {
     use_fancy_tab_bar = false,
     window_decorations="INTEGRATED_BUTTONS|RESIZE",
@@ -108,4 +118,5 @@ return {
     mouse_bindings = mouse_bindings,
     default_prog = default_prog,
     harfbuzz_features = {"calt=0", "clig=0", "liga=0"},
+    tab_bar_style = tab_bar_style,
 }
