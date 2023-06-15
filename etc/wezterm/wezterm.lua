@@ -1,6 +1,9 @@
 local wezterm = require "wezterm"
 
+local config = {}
+
 local launch_menu = {}
+config.launch_menu = launch_menu
 
 local ssh_cmd = {"ssh"}
 
@@ -52,13 +55,17 @@ if f then
                     args = args,
                 }
             )
+            -- default open vm
+            if host == "vm" then
+                config.default_prog = {"powershell.exe", "ssh", "vm"}
+            end
         end
         line = f:read("*l")
     end
     f:close()
 end
 
-local mouse_bindings = {
+config.mouse_bindings = {
     -- 右键粘贴
     {
         event = {Down = {streak = 1, button = "Right"}},
@@ -80,7 +87,7 @@ local mouse_bindings = {
     }
 }
 
-local default_prog = {"powershell.exe", "ssh", "vm"}
+
 
 wezterm.on( "update-right-status", function(window)
     local date = wezterm.strftime("%Y-%m-%d %H:%M:%S   ")
@@ -93,30 +100,34 @@ wezterm.on( "update-right-status", function(window)
     )
 end)
 
-local mux = wezterm.mux
+wezterm.on('format-tab-title', function (tab, _, _, _, _)
+    return {
+        { Text = ' ' .. tab.tab_index + 1 .. ' ' },
+    }
+end)
+
 wezterm.on("gui-startup", function()
-  local tab, pane, window = mux.spawn_window{}
+  local tab, pane, window = wezterm.mux.spawn_window{}
   window:gui_window():maximize()
 end)
 
-local tab_bar_style = {
-    window_hide = " - ",
-    window_maximize = " + ",
-    window_close = " X ",
-
-    window_hide_hover = " - ",
-    window_maximize_hover = " + ",
-    window_close_hover = " X ",
+local window_min = ' 󰖰 '
+local window_max = ' 󰖯 '
+local window_close = ' 󰅖 '
+config.tab_bar_style = {
+    window_hide = window_min,
+    window_hide_hover = window_min,
+    window_maximize = window_max,
+    window_maximize_hover = window_max,
+    window_close = window_close,
+    window_close_hover = window_close,
 }
 
-local cappuccin = require("lua/catppuccin").select("frappe")
-return {
-    use_fancy_tab_bar = false,
-    window_decorations="INTEGRATED_BUTTONS|RESIZE",
-    colors = cappuccin,
-    launch_menu = launch_menu,
-    mouse_bindings = mouse_bindings,
-    default_prog = default_prog,
-    harfbuzz_features = {"calt=0", "clig=0", "liga=0"},
-    tab_bar_style = tab_bar_style,
-}
+config.use_fancy_tab_bar = false
+config.window_decorations="INTEGRATED_BUTTONS|RESIZE"
+config.integrated_title_buttons = { 'Hide', 'Maximize', 'Close' }
+config.color_scheme = 'Catppuccin Frappe'
+config.harfbuzz_features = {"calt=0", "clig=0", "liga=0"}
+config.check_for_updates = false
+
+return config
