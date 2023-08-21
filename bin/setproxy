@@ -4,7 +4,7 @@ op=$1
 addr=$2
 
 if [ -z $op ]; then
-    op="on"
+	op="on"
 fi
 
 if [ -z $addr ]; then
@@ -12,16 +12,15 @@ if [ -z $addr ]; then
 	touch ~/.local/etc/.proxy
 	. ~/.local/etc/.proxy
 else
-	echo 'addr="'$addr'"' > ~/.local/etc/.proxy
+	echo 'addr="'$addr'"' >~/.local/etc/.proxy
 fi
 
 etc_config=$HOME/.local/etc/config.sh
 
 if [[ "$op" == "on" ]]; then
-    sed -i 's/^export http_proxy=.*/export http_proxy=http:\/\/'$addr'/' $etc_config
-    echo "set proxy $addr ok"
+	sed -i 's/^export proxy_addr=.*/export proxy_addr=http:\/\/'$addr'/' $etc_config
+	echo "set proxy $addr ok"
 else
-    sed -i 's/^export http_proxy=.*/export http_proxy=/' $etc_config
-    echo "set proxy off ok"
+	sed -i 's/^export proxy_addr=.*/export proxy_addr=/' $etc_config
+	echo "set proxy off ok"
 fi
-
