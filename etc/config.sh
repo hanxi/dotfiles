@@ -1,19 +1,19 @@
 # shell prompt
 # from vim ":PromptlineSnapshot ~/.local/etc/shell_prompt.sh airline"
 if [ -f "$HOME/.local/etc/shell_prompt.sh" ]; then
-	. $HOME/.local/etc/shell_prompt.sh
+    . $HOME/.local/etc/shell_prompt.sh
 fi
 
 # enable bash completion
 # yum install bash-completion
 [[ $PS1 && -f /usr/local/share/bash-completion/bash_completion ]] &&
-	. /usr/local/share/bash-completion/bash_completion
+    . /usr/local/share/bash-completion/bash_completion
 [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] &&
-	. /usr/share/bash-completion/bash_completion
+    . /usr/share/bash-completion/bash_completion
 
 # git completion
 if [ -f /etc/bash_completion.d/git ]; then
-	. /etc/bash_completion.d/git
+    . /etc/bash_completion.d/git
 fi
 
 # for .local lib
@@ -39,12 +39,8 @@ alias proxyon="setproxy on; . ~/.local/etc/config.sh"
 alias proxyoff="setproxy off; . ~/.local/etc/config.sh"
 
 # editor
-if command -v nvim >/dev/null 2>&1; then
-	alias vim=nvim
-	export VISUAL=nvim
-else
-	export VISUAL=vim
-fi
+alias vim=nvim
+export VISUAL=nvim
 export EDITOR="$VISUAL"
 
 #alias svn=svn-color.py
@@ -55,12 +51,12 @@ git config --global alias.tree "log --all --graph --decorate=short --color --for
 
 # set pwd for tmux
 function set_tmux_pwd() {
-	[ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD"
-	return 0
+    [ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD"
+    return 0
 }
 function my_cd() {
-	\cd $1
-	set_tmux_pwd
+    \cd $1
+    set_tmux_pwd
 }
 set_tmux_pwd
 alias cd=my_cd

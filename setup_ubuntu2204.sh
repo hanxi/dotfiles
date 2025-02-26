@@ -55,7 +55,7 @@ done
 #######################################################################
 RIPGREP_DIR=$HOME/.local/tools/ripgrep
 RIPGREP_SRC_NAME=$HOME/.local/packages/ripgrep.tar.gz
-RIPGREP_LINK="https://github.com/BurntSushi/ripgrep/releases/download/12.0.0/ripgrep-12.0.0-x86_64-unknown-linux-musl.tar.gz"
+RIPGREP_LINK="https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep-13.0.0-x86_64-unknown-linux-musl.tar.gz"
 if [[ -z "$(command -v rg)" ]] && [[ ! -f "$RIPGREP_DIR/rg" ]]; then
     echo "Install ripgrep"
     if [[ "$USE_CACHE" = false || ! -f $RIPGREP_SRC_NAME ]]; then
