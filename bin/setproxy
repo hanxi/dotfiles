@@ -1,26 +1,61 @@
 #!/bin/bash
 
-op=$1
+# 定义代理配置文件路径
+PROXY_CONFIG="$HOME/.local/etc/.proxy"
+ETC_CONFIG="$HOME/.local/etc/config.sh"
+
+# 显示帮助信息
+usage() {
+    echo "Usage: $0 [on|off] [address:port]"
+    echo "  on: 启用代理 (默认)"
+    echo "  off: 关闭代理"
+    exit 1
+}
+
+# 参数处理
+op=${1:-"on"}
 addr=$2
 
-if [ -z $op ]; then
-	op="on"
+# 检查操作参数是否合法
+if [[ "$op" != "on" && "$op" != "off" ]]; then
+    usage
 fi
 
-if [ -z $addr ]; then
-	#addr="192.168.2.5:8080"
-	touch ~/.local/etc/.proxy
-	. ~/.local/etc/.proxy
+# 处理地址
+if [[ -z "$addr" ]]; then
+    # 如果没有提供地址，尝试读取已保存的地址
+    if [[ -f "$PROXY_CONFIG" ]]; then
+        # shellcheck source=/dev/null
+        . "$PROXY_CONFIG"
+    else
+        # 如果没有保存的地址，提示错误
+        echo "错误：未指定代理地址"
+        usage
+    fi
 else
-	echo 'addr="'$addr'"' >~/.local/etc/.proxy
+    # 保存新的地址
+    echo "addr=\"$addr\"" > "$PROXY_CONFIG"
 fi
 
-etc_config=$HOME/.local/etc/config.sh
+# 确保配置文件存在
+if [[ ! -f "$ETC_CONFIG" ]]; then
+    echo "错误：配置文件 $ETC_CONFIG 不存在"
+    exit 1
+fi
 
+# 代理开关处理
 if [[ "$op" == "on" ]]; then
-	sed -i 's/^export proxy_addr=.*/export proxy_addr=http:\/\/'$addr'/' $etc_config
-	echo "set proxy $addr ok"
+    if [[ -z "$addr" ]]; then
+        echo "错误：缺少代理地址"
+        usage
+    fi
+
+    # 使用 sed 修改代理设置
+    sed -i "s|^export proxy_addr=.*|export proxy_addr=http://$addr|" "$ETC_CONFIG"
+    echo "代理已启用：$addr"
 else
-	sed -i 's/^export proxy_addr=.*/export proxy_addr=/' $etc_config
-	echo "set proxy off ok"
+    # 关闭代理
+    sed -i 's|^export proxy_addr=.*|export proxy_addr=|' "$ETC_CONFIG"
+    echo "代理已关闭"
 fi
+
