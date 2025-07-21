@@ -47,7 +47,9 @@ cp bootstrap.sh $BIN/
 
 if is_debian_12; then
 	echo "install package"
-	bash setup_debian12.sh
+	bash setup_mise.sh
+	bash mise_init.sh
+	bash setup_nvim.sh
 fi
 
 # source init.sh
