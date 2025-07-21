@@ -13,6 +13,37 @@ MINGW*) machine=MinGw ;;
 esac
 echo ${machine}
 
+is_debian_12() {
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        if [[ "$NAME" == "Debian GNU/Linux" && "$VERSION_ID" == "12" ]]; then
+            return 0
+        fi
+    fi
+    return 1
+}
+
+if is_debian_12; then
+    echo "当前系统是 Debian 12"
+fi
+
+is_ubuntu_2204() {
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        if [[ "$NAME" == "Ubuntu" && "$VERSION_ID" == "22.04" ]]; then
+            return 0
+        fi
+    fi
+    return 1
+}
+
+# 执行判断
+if is_ubuntu_2204; then
+    echo "当前系统是 Ubuntu 22.04"
+fi
+
+
+
 ETC=~/.local/etc
 BIN=~/.local/bin
 mkdir -p $ETC
@@ -31,8 +62,13 @@ cp -rf etc/* $ETC/
 cp -rf bin/* $BIN/
 cp bootstrap.sh $BIN/
 
-if [ $machine == "Linux" ]; then
-	echo "install nvim"
+if is_debian_12; then
+	echo "install package"
+	bash ~/.local/dotfiles/setup_debian12.sh
+fi
+
+if is_ubuntu_2204; then
+	echo "install package"
 	bash ~/.local/dotfiles/setup_ubuntu2204.sh
 fi
 
@@ -68,12 +104,13 @@ git config --global delta.light false
 git config --global delta.side-by-side true
 git config --global merge.conflictstyle diff3
 git config --global diff.colorMoved default
+git config --global pull.rebase true
 
 # install vim plug
-vim_version=$(\vim --version | head -1)
-if [[ $(echo $vim_version | awk -F '[ .]' '{print $5}') -gt 7 ]]; then
-	\vim +PlugInstall +qall
-fi
+#vim_version=$(\vim --version | head -1)
+#if [[ $(echo $vim_version | awk -F '[ .]' '{print $5}') -gt 7 ]]; then
+#	\vim +PlugInstall +qall
+#fi
 
 # install wezterm
 rm -rf ~/.config/wezterm

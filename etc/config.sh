@@ -59,7 +59,7 @@ function my_cd() {
     set_tmux_pwd
 }
 set_tmux_pwd
-alias cd=my_cd
+#alias cd=my_cd
 
 alias l='ls -CF'
 alias la='ls -A'
